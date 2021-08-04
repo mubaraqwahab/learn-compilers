@@ -34,11 +34,11 @@ Consume the next input character.
 * **Other digit:** Append the current character to the value of the current number token. Switch to the [number int digit state](#number-int-digit-state)
 * **Anything else:** ??
 
-## Number int digit state
+### Number int digit state
 
 Consume the next input character.
 
-## Number int end state
+### Number int end state
 
 Consume the next input character.
 
