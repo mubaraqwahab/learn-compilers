@@ -22,15 +22,27 @@ Consume the next input character.
 * **`}` right curly bracket:** Emit a (what?) token.
 * **`:` colon:** Emit a (what?) token.
 * **`,` comma:** Emit a (what?) token.
-* **`-` minus:** Create a new number token and append a `-` minus to its value. Switch to the [number int state](#number-int-state).
-* **Digit:** Reconsume the current character in the [number int state](#number-int-state).
+* **`-` minus:** Create a new number token and append a `-` minus to its value. Switch to the [number int start state](#number-int-start-state).
+* **Digit:** Reconsume the current character in the [number int start state](#number-int-start-state).
 * **ASCII lowercase character:** Reconsume the current character in the [literal state](#literal-state-todo-rename).
 
-### Number int state
+### Number int start state
 
 Consume the next input character.
 
-TODO
+* **`0` zero:** Append the current input character to the value of the current number token. Switch to the [number int end state](#number-int-end-state).
+* **Other digit:** Append the current character to the value of the current number token. Switch to the [number int digit state](#number-int-digit-state)
+* **Anything else:** ??
+
+## Number int digit state
+
+Consume the next input character.
+
+## Number int end state
+
+Consume the next input character.
+
+On `.`? Anything else?
 
 ### String state
 
