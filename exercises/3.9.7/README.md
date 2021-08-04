@@ -4,6 +4,8 @@ See [ECMA-404](https://datatracker.ietf.org/doc/html/rfc8259#ref-ECMA-404) and [
 
 This 'hand-made' scanner works as a state machine and it's described here.
 
+## Tokens
+
 ## State machine
 
 The state machine starts in the [data state](#data-state).
@@ -36,10 +38,15 @@ Consume the next input character.
 
 Consume the next input character.
 
-* **`\` backslash or `"` quotation mark:** Append the current character to the value of the current string token.
-* **`n` ASCII lowercase n:** Append a `\n` linefeed character to the value of the current string token.
-* **What else??**
+* **`\` backslash, or `/` solidus, or `"` quotation mark:** Append the current character to the value of the current string token.
+* **`b` ASCII lowercase b:** Append a `\b` backspace character to the value of the current string token.
+* **`f` ASCII lowercase f:** Append a `\f` form feed character to the value of the current string token.
+* **`n` ASCII lowercase n:** Append a `\n` line feed character to the value of the current string token.
+* **`r` ASCII lowercase r:** Append a `\r` carriage return character to the value of the current string token.
+* **`t` ASCII lowercase t:** Append a `\t` tab character to the value of the current string token.
 * **Anything else:** Append a `\` backslash and the current input character to the value of the current string token.
+
+Switch to the [string state](#string-state).
 
 ### Literal state (TODO: rename?)
 
