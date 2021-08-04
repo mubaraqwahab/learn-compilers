@@ -1,6 +1,6 @@
 # JSON Scanner
 
-See [ECMA-404](https://datatracker.ietf.org/doc/html/rfc8259#ref-ECMA-404) and [RFC8259](https://datatracker.ietf.org/doc/html/rfc8259) for JSON specifications.
+See [ECMA-404](https://datatracker.ietf.org/doc/html/rfc8259#ref-ECMA-404) and [RFC 8259](https://datatracker.ietf.org/doc/html/rfc8259) for JSON specifications.
 
 This 'hand-made' scanner works as a state machine and it's described here.
 
@@ -22,8 +22,15 @@ Consume the next input character.
 * **`}` right curly bracket:** Emit a (what?) token.
 * **`:` colon:** Emit a (what?) token.
 * **`,` comma:** Emit a (what?) token.
-* **Number:** ??
+* **`-` minus:** Create a new number token and append a `-` minus to its value. Switch to the [number int state](#number-int-state).
+* **Digit:** Reconsume the current character in the [number int state](#number-int-state).
 * **ASCII lowercase character:** Reconsume the current character in the [literal state](#literal-state-todo-rename).
+
+### Number int state
+
+Consume the next input character.
+
+TODO
 
 ### String state
 
