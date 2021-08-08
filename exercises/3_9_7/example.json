@@ -1,0 +1,9 @@
+{
+  "description": "Some\nrandom JSON \"doc\"",
+  "private": true,
+  "online": false,
+  "author": null,
+  "keywords": [],
+  "numbers": [1, -2e5],
+  "lint-staged": {}
+}
