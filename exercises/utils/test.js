@@ -22,8 +22,8 @@ const color = {
  * test("2 plus 2 is 5", () => {
  *   assert(2 + 2 === 5, "wrong! 2 + 2 isn't 5")
  * })
- * // ❌ 2 plus 2 is 5
- * // wrong! 2 + 2 isn't 5
+ * // ✖ 2 plus 2 is 5
+ * // AssertionError [ERR_ASSERTION]: wrong! 2 + 2 isn't 5
  */
 async function test(desc, fn) {
   try {
