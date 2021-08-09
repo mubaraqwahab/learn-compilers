@@ -23,6 +23,6 @@
   },
   "lint-staged": {
     "*.{js,json,md}": "npx prettier --write",
-    "*.{cpp,h}": "astyle --style=kr --s2 --suffix=none"
+    "*.{c,cpp,h}": "astyle --project"
   }
 }

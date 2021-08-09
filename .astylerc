@@ -1,0 +1,5 @@
+# See http://astyle.sourceforge.net/astyle.html
+
+--style=kr
+--indent=spaces=2
+--suffix=none
