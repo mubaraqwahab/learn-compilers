@@ -27,4 +27,4 @@ function test(desc, fn) {
   }
 }
 
-module.exports = test
+export default test

@@ -3,8 +3,8 @@
 // 3.9.1 (b)
 // Regex for integers where every 3 digits are separated by commas.
 
-const test = require("../utils/test")
-const { assertEachMatches, assertEachDoesNotMatch } = require("../utils/assert")
+import test from "../utils/test.js"
+import { assertEachMatches, assertEachDoesNotMatch } from "../utils/assert.js"
 
 const sepIntPattern = /^[0-9]{1,3}(,[0-9]{3})*$/
 

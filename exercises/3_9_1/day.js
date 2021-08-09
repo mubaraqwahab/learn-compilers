@@ -3,8 +3,8 @@
 // 3.9.1 (a)
 // Regex for English days of the week
 
-const test = require("../utils/test")
-const { assertEachMatches, assertEachDoesNotMatch } = require("../utils/assert")
+import test from "../utils/test.js"
+import { assertEachMatches, assertEachDoesNotMatch } from "../utils/assert.js"
 
 const dayPattern = /^(Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day$/
 
