@@ -1,5 +1,6 @@
 #include "json-scanner.h"
 
-int main() {
+int main()
+{
   return 0;
 }

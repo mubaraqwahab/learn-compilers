@@ -22,6 +22,7 @@
     "prettier": "2.3.2"
   },
   "lint-staged": {
-    "*.{js,json,md}": "npx prettier --write"
+    "*.{js,json,md}": "npx prettier --write",
+    "*.{cpp,h}": "astyle --style=kr --s2 --suffix=none"
   }
 }
