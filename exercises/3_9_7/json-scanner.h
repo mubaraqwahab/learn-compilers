@@ -3,11 +3,11 @@
 
 class JSONScanner
 {
-  _next_tokens_buff;
-  _current_buff;
-  state;
+public:
   next_token();
-  prepend_token(int& token);
+private:
+  _state;
+  _token_buff;
 }
 
 #endif /* JSON_SCANNER_H */
