@@ -13,5 +13,5 @@ test("matches separated ints", () => {
 })
 
 test("doesn't match non-separated ints", () => {
-  assertEachDoesNotMatch(["78", "10,92", "692098000"], sepIntPattern)
+  assertEachDoesNotMatch(["78,", "10,92", "692098000"], sepIntPattern)
 })

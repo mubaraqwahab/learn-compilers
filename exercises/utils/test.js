@@ -11,7 +11,7 @@ const color = {
  * Create a test.
  * The test fails if `fn` throws, but passes otherwise.
  * @param {string} desc - A description for the test.
- * @param {() => void} fn
+ * @param {() => void | Promise<void>} fn
  *
  * @example
  * test("2 plus 2 is 4", () => {
