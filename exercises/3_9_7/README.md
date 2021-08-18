@@ -41,6 +41,7 @@ Consume the next input character:
 - **digit:** reconsume the current character in the number state.
 - **lowercase character:** set the buffer to an empty string. Append the current character to the buffer. Switch to the literal name state.
 - **whitespace character:** ignore.
+- **eof:** emit an eof token.
 - **anything else:** emit an error token.
 
 ### String state
