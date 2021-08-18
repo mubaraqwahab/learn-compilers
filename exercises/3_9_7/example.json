@@ -4,6 +4,6 @@
   "online": false,
   "author": null,
   "keywords": [],
-  "numbers": [1, -2e5],
+  "numbers": [1, -2e5, 0, -0, 0.1e3],
   "lint-staged": {}
 }
