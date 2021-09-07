@@ -4,11 +4,26 @@
 #include <string>
 #include <iostream>
 
+enum class TokenType {
+  lbracket,
+  lcurly,
+  rbracket,
+  rcurly,
+  colon,
+  comma,
+  string,
+  number,
+  boolean,
+  null
+};
+
 class JSONScanner
 {
 public:
-  JSONScanner(std::istream input_stream);
-  std::string nextToken();
+  JSONScanner(std::istream& is);
+  TokenType nextToken();
+private:
+  std::istream input_stream;
 };
 
 #endif /* JSON_SCANNER_H */
