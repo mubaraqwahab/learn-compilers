@@ -10,7 +10,7 @@ int main()
   // file
   auto s = new JSONScanner(cin);
 
-  if (s->next_token() == TokenType::rbracket) {
+  if (s->next_token() == TokenType::lcurly) {
     cout << "works" << endl;
   }
 
