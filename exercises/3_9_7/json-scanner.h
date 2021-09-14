@@ -21,7 +21,7 @@ class JSONScanner
 {
 public:
   JSONScanner(std::istream& is);
-  TokenType nextToken();
+  TokenType next_token();
 private:
   std::istream input_stream;
 };

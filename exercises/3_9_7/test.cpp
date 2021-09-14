@@ -9,10 +9,9 @@ int main()
 
   // file
   auto s = new JSONScanner(cin);
-  // s.nextToken() // token
 
-  if (s.next_token() == = TokenType::rbracket) {
-    cout << "works"
+  if (s->next_token() == TokenType::rbracket) {
+    cout << "works" << endl;
   }
 
   return 0;

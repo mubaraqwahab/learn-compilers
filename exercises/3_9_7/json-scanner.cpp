@@ -3,7 +3,6 @@
 
 using namespace std;
 
-// Define JSONScanner here
 JSONScanner::JSONScanner(istream& is): input_stream(is.rdbuf())
 {
 }
