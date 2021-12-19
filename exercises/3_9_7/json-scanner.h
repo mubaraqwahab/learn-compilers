@@ -3,11 +3,10 @@
 
 #include <iostream>
 #include <deque>
+#include <string>
 
 namespace json
 {
-
-
 enum class TokenType {
   lbracket,
   lcurly,
@@ -20,6 +19,9 @@ enum class TokenType {
   boolean,
   null
 };
+
+// for debugging
+std::string tok_as_string(TokenType tok);
 
 enum class State {
   value,
@@ -62,7 +64,6 @@ private:
   void number_exponent_start_handler();
   void number_exponent_handler();
 };
-
 }
 
 #endif /* JSON_SCANNER_H */

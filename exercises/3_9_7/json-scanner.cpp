@@ -1,11 +1,41 @@
 #include "json-scanner.h"
 #include <iostream>
+#include <string>
+#include <stdexcept>
 
 using namespace std;
 
 namespace json
 {
 
+// for debugging
+string tok_as_string(TokenType tok)
+{
+  switch (tok) {
+  case TokenType::lbracket:
+    return "lbracket";
+  case TokenType::lcurly:
+    return "lcurly";
+  case TokenType::rbracket:
+    return "rbracket";
+  case TokenType::rcurly:
+    return "rcurly";
+  case TokenType::colon:
+    return "colon";
+  case TokenType::comma:
+    return "comma";
+  case TokenType::string:
+    return "string";
+  case TokenType::number:
+    return "number";
+  case TokenType::boolean:
+    return "boolean";
+  case TokenType::null:
+  // return "null";
+  default:
+    throw std::invalid_argument("Unknown token type");
+  }
+}
 
 Scanner::Scanner(istream& is) : input_stream(is.rdbuf())
 {
@@ -81,11 +111,17 @@ void Scanner::value_handler()
   if (c == '{') {
     available_tokens.push_back(TokenType::lcurly);
   } else if (c == '[') {
+    available_tokens.push_back(TokenType::lbracket);
   } else if (c == '}') {
+    available_tokens.push_back(TokenType::rcurly);
   } else if (c == ']') {
+    available_tokens.push_back(TokenType::rbracket);
   } else if (c == ':') {
+    available_tokens.push_back(TokenType::colon);
   } else if (c == ',') {
+    available_tokens.push_back(TokenType::comma);
   } else if (c == '"') {
+    //
   } else if (c == '-') {
   } else if (c >= '0' && c <= '9') {
   } else if (c >= 'a' && c <= 'z') {
@@ -96,18 +132,26 @@ void Scanner::value_handler()
   }
 }
 
-
-
 void Scanner::string_handler() {}
+
 void Scanner::string_escape_handler() {}
+
 void Scanner::literal_name_handler() {}
+
 void Scanner::number_start_handler() {}
+
 void Scanner::number_int_handler() {}
+
 void Scanner::number_after_int_handler() {}
+
 void Scanner::number_fraction_start_handler() {}
+
 void Scanner::number_fraction_handler() {}
+
 void Scanner::number_exponent_sign_handler() {}
+
 void Scanner::number_exponent_start_handler() {}
+
 void Scanner::number_exponent_handler() {}
 
 }

@@ -1,18 +1,19 @@
 #include <iostream>
+#include <string>
 #include "json-scanner.h"
 
 using namespace std;
+using namespace json;
+
 
 int main()
 {
   cout << "Hello, world!" << endl;
 
   // file
-  auto s = new json::Scanner(cin);
-
-  if (s->next_token() == json::TokenType::lcurly) {
-    cout << "works" << endl;
-  }
+  auto s = new Scanner(cin);
+  auto tok = s->next_token();
+  cout << tok_as_string(tok) << endl;
 
   return 0;
 }
