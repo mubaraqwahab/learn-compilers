@@ -8,9 +8,9 @@ int main()
   cout << "Hello, world!" << endl;
 
   // file
-  auto s = new JSONScanner(cin);
+  auto s = new json::Scanner(cin);
 
-  if (s->next_token() == TokenType::lcurly) {
+  if (s->next_token() == json::TokenType::lcurly) {
     cout << "works" << endl;
   }
 

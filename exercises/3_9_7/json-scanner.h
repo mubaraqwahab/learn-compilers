@@ -4,6 +4,10 @@
 #include <iostream>
 #include <deque>
 
+namespace json
+{
+
+
 enum class TokenType {
   lbracket,
   lcurly,
@@ -32,10 +36,10 @@ enum class State {
   number_exponent
 };
 
-class JSONScanner
+class Scanner
 {
 public:
-  JSONScanner(std::istream& is);
+  Scanner(std::istream& is);
   TokenType next_token();
 
 private:
@@ -58,5 +62,7 @@ private:
   void number_exponent_start_handler();
   void number_exponent_handler();
 };
+
+}
 
 #endif /* JSON_SCANNER_H */

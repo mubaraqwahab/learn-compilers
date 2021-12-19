@@ -3,13 +3,17 @@
 
 using namespace std;
 
-JSONScanner::JSONScanner(istream& is) : input_stream(is.rdbuf())
+namespace json
+{
+
+
+Scanner::Scanner(istream& is) : input_stream(is.rdbuf())
 {
   // Initial state
   state = State::value;
 }
 
-TokenType JSONScanner::next_token()
+TokenType Scanner::next_token()
 {
   while (available_tokens.size() == 0) {
     get_state_handler();
@@ -20,7 +24,14 @@ TokenType JSONScanner::next_token()
   return token;
 }
 
-void JSONScanner::get_state_handler()
+char Scanner::next_char()
+{
+  char c;
+  input_stream >> c;
+  return c;
+}
+
+void Scanner::get_state_handler()
 {
   switch (state) {
   case State::value:
@@ -64,7 +75,7 @@ void JSONScanner::get_state_handler()
   }
 }
 
-void JSONScanner::value_handler()
+void Scanner::value_handler()
 {
   char c = next_char();
   if (c == '{') {
@@ -85,9 +96,18 @@ void JSONScanner::value_handler()
   }
 }
 
-char JSONScanner::next_char()
-{
-  char c;
-  input_stream >> c;
-  return c;
+
+
+void Scanner::string_handler() {}
+void Scanner::string_escape_handler() {}
+void Scanner::literal_name_handler() {}
+void Scanner::number_start_handler() {}
+void Scanner::number_int_handler() {}
+void Scanner::number_after_int_handler() {}
+void Scanner::number_fraction_start_handler() {}
+void Scanner::number_fraction_handler() {}
+void Scanner::number_exponent_sign_handler() {}
+void Scanner::number_exponent_start_handler() {}
+void Scanner::number_exponent_handler() {}
+
 }
