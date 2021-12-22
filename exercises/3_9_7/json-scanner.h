@@ -17,7 +17,8 @@ namespace json
     string,
     number,
     boolean,
-    null
+    null,
+    eof
   };
 
   // for debugging

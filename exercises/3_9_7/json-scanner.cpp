@@ -31,6 +31,8 @@ namespace json
       return "boolean";
     case Token::null:
       return "null";
+    case Token::eof:
+      return "eof";
     default:
       throw std::invalid_argument("Unknown token type");
     }
@@ -56,7 +58,7 @@ namespace json
   char Scanner::next_char()
   {
     char c;
-    input_stream >> c;
+    input_stream.get(c);
     return c;
   }
 
@@ -120,20 +122,37 @@ namespace json
     } else if (c == ',') {
       available_tokens.push_back(Token::comma);
     } else if (c == '"') {
-      //
+      state = State::string;
     } else if (c == '-') {
     } else if (c >= '0' && c <= '9') {
     } else if (c >= 'a' && c <= 'z') {
     } else if (isspace(c)) {
+      // noop
     }
     /* else if end of file */
     else {
+      available_tokens.push_back(Token::eof);
     }
   }
 
-  void Scanner::string_handler() {}
+  void Scanner::string_handler()
+  {
+    char c = next_char();
+    if (c == '"') {
+      available_tokens.push_back(Token::string);
+      state = State::value;
+    } else if (c == '\\') {
+      state = State::string_escape;
+    } else {
+      // noop
+    }
+  }
 
-  void Scanner::string_escape_handler() {}
+  void Scanner::string_escape_handler()
+  {
+    next_char();
+    state = State::string;
+  }
 
   void Scanner::literal_name_handler() {}
 
