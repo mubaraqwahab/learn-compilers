@@ -5,6 +5,7 @@
 --indent=spaces=2
 --indent-col1-comments
 --indent-cases
+--indent-namespaces
 --indent-after-parens
 --attach-closing-while
 --attach-return-type
