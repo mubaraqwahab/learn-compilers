@@ -61,6 +61,17 @@ namespace json
     return input_stream.get();
   }
 
+  void Scanner::reconsume_in_state(State s)
+  {
+    input_stream.unget();
+    state = s;
+  }
+
+  void Scanner::emit(Token tok)
+  {
+    available_tokens.push_back(tok);
+  }
+
   void Scanner::handle_current_state()
   {
     switch (state) {
@@ -109,26 +120,28 @@ namespace json
   {
     char c = next_char();
     if (c == '{') {
-      available_tokens.push_back(Token::lcurly);
+      emit(Token::lcurly);
     } else if (c == '[') {
-      available_tokens.push_back(Token::lbracket);
+      emit(Token::lbracket);
     } else if (c == '}') {
-      available_tokens.push_back(Token::rcurly);
+      emit(Token::rcurly);
     } else if (c == ']') {
-      available_tokens.push_back(Token::rbracket);
+      emit(Token::rbracket);
     } else if (c == ':') {
-      available_tokens.push_back(Token::colon);
+      emit(Token::colon);
     } else if (c == ',') {
-      available_tokens.push_back(Token::comma);
+      emit(Token::comma);
     } else if (c == '"') {
       state = State::string;
     } else if (c == '-') {
+      state = State::number_start;
     } else if (c >= '0' && c <= '9') {
+      reconsume_in_state(State::number_start);
     } else if (c >= 'a' && c <= 'z') {
     } else if (isspace(c)) {
       // noop
     } else if (c == EOF) {
-      available_tokens.push_back(Token::eof);
+      emit(Token::eof);
     }
     // TODO: error
     else {
@@ -140,7 +153,7 @@ namespace json
   {
     char c = next_char();
     if (c == '"') {
-      available_tokens.push_back(Token::string);
+      emit(Token::string);
       state = State::value;
     } else if (c == '\\') {
       state = State::string_escape;

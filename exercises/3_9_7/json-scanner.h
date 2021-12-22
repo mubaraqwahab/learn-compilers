@@ -51,6 +51,8 @@ namespace json
     std::deque<Token> available_tokens;
     void handle_current_state();
     char next_char();
+    void reconsume_in_state(State s);
+    void emit(Token tok);
     // Handlers
     void value_handler();
     void string_handler();
