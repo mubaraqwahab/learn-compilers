@@ -1,7 +1,8 @@
-#include "json-scanner.h"
 #include <iostream>
 #include <string>
 #include <stdexcept>
+#include <cstdio>
+#include "json-scanner.h"
 
 using namespace std;
 
@@ -57,9 +58,7 @@ namespace json
 
   char Scanner::next_char()
   {
-    char c;
-    input_stream.get(c);
-    return c;
+    return input_stream.get();
   }
 
   void Scanner::handle_current_state()
@@ -128,10 +127,12 @@ namespace json
     } else if (c >= 'a' && c <= 'z') {
     } else if (isspace(c)) {
       // noop
-    }
-    /* else if end of file */
-    else {
+    } else if (c == EOF) {
       available_tokens.push_back(Token::eof);
+    }
+    // TODO: error
+    else {
+      throw std::invalid_argument("Invalid character: " + c);
     }
   }
 
