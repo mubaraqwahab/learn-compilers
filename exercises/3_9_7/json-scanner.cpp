@@ -9,29 +9,29 @@ namespace json
 {
 
 // for debugging
-string tok_as_string(TokenType tok)
+string tok_as_string(Token tok)
 {
   switch (tok) {
-  case TokenType::lbracket:
+  case Token::lbracket:
     return "lbracket";
-  case TokenType::lcurly:
+  case Token::lcurly:
     return "lcurly";
-  case TokenType::rbracket:
+  case Token::rbracket:
     return "rbracket";
-  case TokenType::rcurly:
+  case Token::rcurly:
     return "rcurly";
-  case TokenType::colon:
+  case Token::colon:
     return "colon";
-  case TokenType::comma:
+  case Token::comma:
     return "comma";
-  case TokenType::string:
+  case Token::string:
     return "string";
-  case TokenType::number:
+  case Token::number:
     return "number";
-  case TokenType::boolean:
+  case Token::boolean:
     return "boolean";
-  case TokenType::null:
-  // return "null";
+  case Token::null:
+    return "null";
   default:
     throw std::invalid_argument("Unknown token type");
   }
@@ -43,7 +43,7 @@ Scanner::Scanner(istream& is) : input_stream(is.rdbuf())
   state = State::value;
 }
 
-TokenType Scanner::next_token()
+Token Scanner::next_token()
 {
   while (available_tokens.size() == 0) {
     get_state_handler();
@@ -109,17 +109,17 @@ void Scanner::value_handler()
 {
   char c = next_char();
   if (c == '{') {
-    available_tokens.push_back(TokenType::lcurly);
+    available_tokens.push_back(Token::lcurly);
   } else if (c == '[') {
-    available_tokens.push_back(TokenType::lbracket);
+    available_tokens.push_back(Token::lbracket);
   } else if (c == '}') {
-    available_tokens.push_back(TokenType::rcurly);
+    available_tokens.push_back(Token::rcurly);
   } else if (c == ']') {
-    available_tokens.push_back(TokenType::rbracket);
+    available_tokens.push_back(Token::rbracket);
   } else if (c == ':') {
-    available_tokens.push_back(TokenType::colon);
+    available_tokens.push_back(Token::colon);
   } else if (c == ',') {
-    available_tokens.push_back(TokenType::comma);
+    available_tokens.push_back(Token::comma);
   } else if (c == '"') {
     //
   } else if (c == '-') {

@@ -7,7 +7,7 @@
 
 namespace json
 {
-enum class TokenType {
+enum class Token {
   lbracket,
   lcurly,
   rbracket,
@@ -21,7 +21,7 @@ enum class TokenType {
 };
 
 // for debugging
-std::string tok_as_string(TokenType tok);
+std::string tok_as_string(Token tok);
 
 enum class State {
   value,
@@ -42,12 +42,12 @@ class Scanner
 {
 public:
   Scanner(std::istream& is);
-  TokenType next_token();
+  Token next_token();
 
 private:
   std::istream input_stream;
   State state;
-  std::deque<TokenType> available_tokens;
+  std::deque<Token> available_tokens;
   void get_state_handler();
   char next_char();
   // Handlers
