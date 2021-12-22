@@ -14,12 +14,9 @@ int main()
   ifstream is("test.json");
   if (is.is_open()) {
     auto s = new Scanner(is);
-    while (true) {
-      auto tok = s->next_token();
+    Token tok;
+    while ((tok = s->next_token()) != Token::eof) {
       cout << tok_as_string(tok) << endl;
-      if (tok == Token::eof) {
-        break;
-      }
     }
   }
 
