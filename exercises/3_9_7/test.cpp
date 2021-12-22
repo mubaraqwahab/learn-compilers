@@ -16,8 +16,7 @@ int main()
     auto s = new Scanner(is);
     while (true) {
       auto tok = s->next_token();
-      cout << static_cast<int>(tok) << ": " << tok_as_string(tok) << endl;
-      // cout << tok_as_string(tok) << endl;
+      cout << tok_as_string(tok) << endl;
       if (tok == Token::eof) {
         break;
       }
