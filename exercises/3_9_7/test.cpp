@@ -11,17 +11,18 @@ int main()
 {
   cout << "Type some JSON:" << endl;
 
-  // Open the test.json file
   ifstream is("test.json");
   if (is.is_open()) {
     auto s = new Scanner(is);
-    Token tok;
-    while ((tok = s->next_token()) != Token::eof) {
-      cout << tok_as_string(tok) << endl;
+    while (true) {
+      auto tok = s->next_token();
+      cout << static_cast<int>(tok) << ": " << tok_as_string(tok) << endl;
+      // cout << tok_as_string(tok) << endl;
+      if (tok == Token::eof) {
+        break;
+      }
     }
   }
-
-  // file
 
   return 0;
 }
