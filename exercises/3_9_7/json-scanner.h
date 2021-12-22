@@ -18,6 +18,7 @@ namespace json
     number,
     boolean,
     null,
+    error,
     eof
   };
 

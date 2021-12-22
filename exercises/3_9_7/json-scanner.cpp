@@ -32,6 +32,8 @@ namespace json
       return "boolean";
     case Token::null:
       return "null";
+    case Token::error:
+      return "error";
     case Token::eof:
       return "eof";
     default:
@@ -142,10 +144,8 @@ namespace json
       // noop
     } else if (c == EOF) {
       emit(Token::eof);
-    }
-    // TODO: error
-    else {
-      throw std::invalid_argument("Invalid character: " + c);
+    } else {
+      emit(Token::error);
     }
   }
 
@@ -170,20 +170,96 @@ namespace json
 
   void Scanner::literal_name_handler() {}
 
-  void Scanner::number_start_handler() {}
+  void Scanner::number_start_handler()
+  {
+    char c = next_char();
+    if (c == '0') {
+      state = State::number_after_int;
+    } else if (c >= '1' && c <= '9') {
+      state = State::number_int;
+    } else {
+      emit(Token::error);
+      state = State::value;
+    }
+  }
 
-  void Scanner::number_int_handler() {}
+  void Scanner::number_int_handler()
+  {
+    char c = next_char();
+    if (c >= '0' && c <= '9') {
+      // noop
+    } else {
+      reconsume_in_state(State::number_after_int);
+    }
+  }
 
-  void Scanner::number_after_int_handler() {}
+  void Scanner::number_after_int_handler()
+  {
+    char c = next_char();
+    if (c == '.') {
+      state = State::number_fraction_start;
+    } else if (c == 'e' || c == 'E') {
+      state = State::number_exponent_sign;
+    } else {
+      emit(Token::number);
+      state = State::value;
+    }
+  }
 
-  void Scanner::number_fraction_start_handler() {}
+  void Scanner::number_fraction_start_handler()
+  {
+    char c = next_char();
+    if (c >= '0' && c <= '9') {
+      state = State::number_fraction;
+    } else {
+      emit(Token::error);
+      state = State::value;
+    }
+  }
 
-  void Scanner::number_fraction_handler() {}
+  void Scanner::number_fraction_handler()
+  {
+    char c = next_char();
+    if (c >= '0' && c <= '9') {
+      // noop
+    } else if (c == 'e' || c == 'E') {
+      state = State::number_exponent_sign;
+    } else {
+      emit(Token::number);
+      reconsume_in_state(State::value);
+    }
+  }
 
-  void Scanner::number_exponent_sign_handler() {}
+  void Scanner::number_exponent_sign_handler()
+  {
+    char c = next_char();
+    if (c == '+' || c == '-') {
+      state = State::number_exponent_start;
+    } else {
+      reconsume_in_state(State::number_exponent_start);
+    }
+  }
 
-  void Scanner::number_exponent_start_handler() {}
+  void Scanner::number_exponent_start_handler()
+  {
+    char c = next_char();
+    if (c >= '0' && c <= '9') {
+      state = State::number_exponent;
+    } else {
+      emit(Token::error);
+      state = State::value;
+    }
+  }
 
-  void Scanner::number_exponent_handler() {}
+  void Scanner::number_exponent_handler()
+  {
+    char c = next_char();
+    if (c >= '0' && c <= '9') {
+      // noop
+    } else {
+      emit(Token::number);
+      reconsume_in_state(State::value);
+    }
+  }
 
 }
