@@ -104,9 +104,9 @@ namespace json
       _state = State::string;
     } else if (c == '-') {
       _state = State::number_start;
-    } else if (c >= '0' && c <= '9') {
+    } else if (isdigit(c)) {
       _reconsume_in_state(State::number_start);
-    } else if (c >= 'a' && c <= 'z') {
+    } else if (islower(c)) {
       _buffer = c;
       _state = State::literal_name;
     } else if (isspace(c)) {
@@ -140,7 +140,7 @@ namespace json
   void Scanner::_handle_literal_name_state()
   {
     char c = _next_char();
-    if (c >= 'a' && c <= 'z') {
+    if (islower(c)) {
       _buffer += c;
     } else {
       if (_buffer == "true" || _buffer == "false") {
@@ -159,7 +159,7 @@ namespace json
     char c = _next_char();
     if (c == '0') {
       _state = State::number_after_int;
-    } else if (c >= '1' && c <= '9') {
+    } else if (isdigit(c)) {
       _state = State::number_int;
     } else {
       _emit(Token::error);
@@ -170,7 +170,7 @@ namespace json
   void Scanner::_handle_number_int_state()
   {
     char c = _next_char();
-    if (c >= '0' && c <= '9') {
+    if (isdigit(c)) {
       // noop
     } else {
       _reconsume_in_state(State::number_after_int);
@@ -193,7 +193,7 @@ namespace json
   void Scanner::_handle_number_fraction_start_state()
   {
     char c = _next_char();
-    if (c >= '0' && c <= '9') {
+    if (isdigit(c)) {
       _state = State::number_fraction;
     } else {
       _emit(Token::error);
@@ -204,7 +204,7 @@ namespace json
   void Scanner::_handle_number_fraction_state()
   {
     char c = _next_char();
-    if (c >= '0' && c <= '9') {
+    if (isdigit(c)) {
       // noop
     } else if (c == 'e' || c == 'E') {
       _state = State::number_exponent_sign;
@@ -227,7 +227,7 @@ namespace json
   void Scanner::_handle_number_exponent_start_state()
   {
     char c = _next_char();
-    if (c >= '0' && c <= '9') {
+    if (isdigit(c)) {
       _state = State::number_exponent;
     } else {
       _emit(Token::error);
@@ -238,7 +238,7 @@ namespace json
   void Scanner::_handle_number_exponent_state()
   {
     char c = _next_char();
-    if (c >= '0' && c <= '9') {
+    if (isdigit(c)) {
       // noop
     } else {
       _emit(Token::number);
