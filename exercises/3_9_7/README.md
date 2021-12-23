@@ -19,6 +19,8 @@ This hand-made scanner works as a state machine, as described below. This descri
 - true
 - false
 - null
+- eof
+- error
 
 ## State machine
 
@@ -84,7 +86,7 @@ Consume the next input character:
 
 - **fullstop:** switch to the number fraction start state
 - **lowercase or uppercase E:** switch to the number exponent sign state.
-- **anything else:** emit a number token. Switch to the value state.
+- **anything else:** emit a number token. Reconsume the current character in the value state.
 
 ### Number fraction start state
 
