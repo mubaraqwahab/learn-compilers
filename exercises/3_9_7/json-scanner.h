@@ -19,11 +19,8 @@ namespace json
     boolean,
     null,
     error,
-    eof
+    eof,
   };
-
-  // for debugging
-  std::string tok_as_string(Token tok);
 
   enum class State {
     value,
@@ -37,8 +34,10 @@ namespace json
     number_fraction,
     number_exponent_sign,
     number_exponent_start,
-    number_exponent
+    number_exponent,
   };
+
+
 
   class Scanner
   {
@@ -47,27 +46,34 @@ namespace json
     Token next_token();
 
   private:
-    std::istream input_stream;
-    State state;
-    std::deque<Token> available_tokens;
-    void handle_current_state();
-    char next_char();
-    void reconsume_in_state(State s);
-    void emit(Token tok);
+    std::istream _input_stream;
+    State _state;
+    std::deque<Token> _available_tokens;
+    std::string _buffer;
+
+    char _next_char();
+    void _reconsume_in_state(State s);
+    void _emit(Token token);
+
     // Handlers
-    void value_handler();
-    void string_handler();
-    void string_escape_handler();
-    void literal_name_handler();
-    void number_start_handler();
-    void number_int_handler();
-    void number_after_int_handler();
-    void number_fraction_start_handler();
-    void number_fraction_handler();
-    void number_exponent_sign_handler();
-    void number_exponent_start_handler();
-    void number_exponent_handler();
+    void _handle_current_state();
+    void _handle_value_state();
+    void _handle_string_state();
+    void _handle_string_escape_state();
+    void _handle_literal_name_state();
+    void _handle_number_start_state();
+    void _handle_number_int_state();
+    void _handle_number_after_int_state();
+    void _handle_number_fraction_start_state();
+    void _handle_number_fraction_state();
+    void _handle_number_exponent_sign_state();
+    void _handle_number_exponent_start_state();
+    void _handle_number_exponent_state();
   };
+
+  // for debugging
+  std::string token_as_string(Token token);
+  std::string state_as_string(State state);
 }
 
 #endif /* JSON_SCANNER_H */
