@@ -9,7 +9,7 @@ import { match, doesNotMatch } from "assert"
  */
 function assertEachMatches(strings, pattern) {
   strings.forEach((s) => {
-    match(s, pattern, `Doesn't match: ${s}`)
+    match(s, pattern, `"${s}" doesn't match pattern ${pattern}.`)
   })
 }
 

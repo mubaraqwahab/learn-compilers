@@ -30,7 +30,7 @@ async function test(desc, fn) {
     await fn()
     console.log(`${color.fgGreen}✔${color.reset} ${desc}`)
   } catch (e) {
-    console.log(`${color.fgRed}✖${color.reset} ${desc}\n${e}`)
+    console.log(`${color.fgRed}✖${color.reset} ${desc}\n${e}\n`)
   }
 }
 
