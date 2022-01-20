@@ -24,5 +24,8 @@
   "lint-staged": {
     "*.{js,json,md}": "npx prettier --write",
     "*.{c,cpp,h}": "astyle --project"
+  },
+  "dependencies": {
+    "chevrotain": "^10.0.0"
   }
 }
