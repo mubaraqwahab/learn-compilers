@@ -1,4 +1,4 @@
-import { test } from "../utils/test.js";
+import { test, expect } from "vitest";
 import { lexer } from "./java-lexer.js";
 
 test("can lex a simple Java program", () => {
@@ -12,12 +12,6 @@ test("can lex a simple Java program", () => {
     }
   `;
 
-  const { tokens, errors } = lexer.tokenize(src);
-  console.log(
-    tokens.map((token) => `${token.tokenType.name} (${token.image})`)
-  );
-
-  if (errors.length) {
-    throw new Error(JSON.stringify(errors, null, 2));
-  }
+  const { errors } = lexer.tokenize(src);
+  expect(errors).toEqual([]);
 });

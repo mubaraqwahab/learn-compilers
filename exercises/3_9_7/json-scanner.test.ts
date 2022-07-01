@@ -38,17 +38,23 @@ test("can scan a number", () => {
 test("errs on an invalid number", () => {
   expect(scan(`2.`)).toMatchObject([t.number, t.error, t.eof]);
 
-  assert.deepEqual(scan(`.12`), [t.error, t.number, t.eof]);
+  expect(scan(`.12`)).toMatchObject([t.error, t.number, t.eof]);
 
-  assert.deepEqual(scan(`-.65`), [t.error, t.error, t.number, t.eof]);
+  expect(scan(`-.65`)).toMatchObject([t.error, t.error, t.number, t.eof]);
 
-  assert.deepEqual(scan(`+10.33`), [t.error, t.number, t.eof]);
+  expect(scan(`+10.33`)).toMatchObject([t.error, t.number, t.eof]);
 
-  assert.deepEqual(scan(`-5.9e4.0`), [t.number, t.error, t.number, t.eof]);
+  expect(scan(`-5.9e4.0`)).toMatchObject([t.number, t.error, t.number, t.eof]);
 
-  assert.deepEqual(scan(`1.e2`), [t.number, t.error, t.error, t.number, t.eof]);
+  expect(scan(`1.e2`)).toMatchObject([
+    t.number,
+    t.error,
+    t.error,
+    t.number,
+    t.eof,
+  ]);
 
-  assert.deepEqual(scan(`7E.31`), [
+  expect(scan(`7E.31`)).toMatchObject([
     t.number,
     t.error,
     t.error,
@@ -58,23 +64,23 @@ test("errs on an invalid number", () => {
 });
 
 test("can scan a literal word (boolean/null)", () => {
-  assert.deepEqual(scan(`true`), [t.boolean, t.eof]);
-  assert.deepEqual(scan(`false`), [t.boolean, t.eof]);
-  assert.deepEqual(scan(`null`), [t.null, t.eof]);
+  expect(scan(`true`)).toMatchObject([t.boolean, t.eof]);
+  expect(scan(`false`)).toMatchObject([t.boolean, t.eof]);
+  expect(scan(`null`)).toMatchObject([t.null, t.eof]);
 });
 
 test("errs on an invalid literal word", () => {
-  assert.deepEqual(scan(`truee`), [t.error, t.eof]);
-  assert.deepEqual(scan(`dfalse`), [t.error, t.eof]);
-  assert.deepEqual(scan(`none`), [t.error, t.eof]);
+  expect(scan(`truee`)).toMatchObject([t.error, t.eof]);
+  expect(scan(`dfalse`)).toMatchObject([t.error, t.eof]);
+  expect(scan(`none`)).toMatchObject([t.error, t.eof]);
 });
 
 test("can scan an array", () => {
-  assert.deepEqual(scan(`[]`), [t.lbracket, t.rbracket, t.eof]);
+  expect(scan(`[]`)).toMatchObject([t.lbracket, t.rbracket, t.eof]);
 
-  assert.deepEqual(scan(`[1]`), [t.lbracket, t.number, t.rbracket, t.eof]);
+  expect(scan(`[1]`)).toMatchObject([t.lbracket, t.number, t.rbracket, t.eof]);
 
-  assert.deepEqual(scan(`["hi", null, 34e3]`), [
+  expect(scan(`["hi", null, 34e3]`)).toMatchObject([
     t.lbracket,
     t.string,
     t.comma,
@@ -87,9 +93,9 @@ test("can scan an array", () => {
 });
 
 test("can scan an object", () => {
-  assert.deepEqual(scan(`{}`), [t.lcurly, t.rcurly, t.eof]);
+  expect(scan(`{}`)).toMatchObject([t.lcurly, t.rcurly, t.eof]);
 
-  assert.deepEqual(scan(`{"key1": "value", "key3": []}`), [
+  expect(scan(`{"key1": "value", "key3": []}`)).toMatchObject([
     t.lcurly,
     t.string,
     t.colon,
