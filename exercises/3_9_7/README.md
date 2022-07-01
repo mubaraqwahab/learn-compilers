@@ -4,7 +4,7 @@ See [ECMA-404](https://www.ecma-international.org/publications-and-standards/sta
 
 This hand-made scanner works as a state machine, as described below. This description is similar to (and based on) the one given in [the specification of the HTML tokenizer](https://html.spec.whatwg.org/#tokenization).
 
-**Note:** The terms _scanner_, _lexer_, and _tokenizer_ are synonymous for our purposes.
+**Note:** The terms _scanner_, _lexer_, and _tokenizer_ are synonymous here.
 
 ## Tokens
 
@@ -25,6 +25,8 @@ This hand-made scanner works as a state machine, as described below. This descri
 ## State machine
 
 TODO: Don't forget special chars like EOF, whitespace, and escape sequences.
+
+TODO: Update this readme!
 
 The state machine starts in the value state.
 

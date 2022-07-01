@@ -1,8 +1,1 @@
 node_modules
-*.o
-
-# Ignore test (executable) files not dir
-# See https://stackoverflow.com/a/49420835/12695621
-exercises/**/test.exe
-exercises/**/test
-exercises/**/!test/

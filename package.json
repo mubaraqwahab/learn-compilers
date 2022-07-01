@@ -1,31 +1,12 @@
 {
   "name": "learn-compilers",
-  "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "prepare": "husky install"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mubaraqwahab/learn-compilers.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mubaraqwahab/learn-compilers/issues"
-  },
-  "homepage": "https://github.com/mubaraqwahab/learn-compilers#readme",
-  "devDependencies": {
-    "husky": "^7.0.1",
-    "lint-staged": "^11.1.2",
-    "prettier": "2.3.2"
-  },
-  "lint-staged": {
-    "*.{js,json,md}": "npx prettier --write",
-    "*.{c,cpp,h}": "astyle --project"
-  },
   "dependencies": {
     "chevrotain": "^10.0.0"
+  },
+  "devDependencies": {
+    "prettier": "2.7.1",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
   }
 }
