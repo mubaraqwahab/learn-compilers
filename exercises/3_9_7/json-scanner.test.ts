@@ -1,5 +1,6 @@
 import * as assert from "node:assert/strict";
-import { assertEachDeepEqual, test } from "../utils/test.js";
+import { test, expect } from "vitest";
+import { assertEachDeepEqual } from "../utils/test.js";
 import { scan, createToken as t, type Token } from "./json-scanner.js";
 
 test("can scan a plain/escaped string", () => {
@@ -16,7 +17,7 @@ test("can scan a plain/escaped string", () => {
   ];
   const eachExpected: Token[] = [t.string, t.eof];
 
-  assertEachDeepEqual(jsons.map(scan), eachExpected);
+  jsons.forEach((json) => expect(scan(json)).toMatchObject(eachExpected));
 });
 
 test("can scan a punctuated string", () => {});
@@ -24,18 +25,18 @@ test("can scan a punctuated string", () => {});
 test("errs on an invalid string", () => {
   const json = `'j'`;
   const expected: Token[] = [t.error, t.error, t.error, t.eof];
-  assert.deepEqual(scan(json), expected);
+  expect(scan(json)).toMatchObject(expected);
 });
 
 test("can scan a number", () => {
   const jsons = [`2`, `-65`, `10.33`, `-5.9e4`, `7E-31`];
   const eachExpected: Token[] = [t.number, t.eof];
 
-  assertEachDeepEqual(jsons.map(scan), eachExpected);
+  jsons.forEach((json) => expect(scan(json)).toMatchObject(eachExpected));
 });
 
 test("errs on an invalid number", () => {
-  assert.deepEqual(scan(`2.`), [t.number, t.error, t.eof]);
+  expect(scan(`2.`)).toMatchObject([t.number, t.error, t.eof]);
 
   assert.deepEqual(scan(`.12`), [t.error, t.number, t.eof]);
 

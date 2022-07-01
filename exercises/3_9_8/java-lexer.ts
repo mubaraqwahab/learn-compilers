@@ -1,4 +1,3 @@
-// TODO: fix module specifier error
 import { createToken, Lexer } from "chevrotain";
 import keywords from "./keywords.js";
 
@@ -18,11 +17,6 @@ const Identifier = createToken({
   pattern: /[a-zA-Z_$][a-zA-Z0-9_$]*/,
 });
 
-const lexer = new Lexer([WhiteSpace, ...keywords, Identifier, Comment]);
+// TODO: punctuators
 
-const { tokens, errors } = lexer.tokenize(
-  'int main() { int thisNum = 2; System.out.println("Hello, world"); }'
-);
-
-console.log(tokens.map((token) => `${token.tokenType.name} (${token.image})`));
-// console.log(errors)
+export const lexer = new Lexer([WhiteSpace, ...keywords, Identifier, Comment]);
