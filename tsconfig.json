@@ -3,6 +3,7 @@
     "module": "NodeNext",
     "target": "ESNext",
     "strict": true,
+    "noUncheckedIndexedAccess": true
   },
   "ts-node": {
     "esm": true
