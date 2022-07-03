@@ -35,6 +35,11 @@ export const createToken: CreateTokenT = {
 // Alias :)
 const t = createToken;
 
+/**
+ * A simple hand-made JSON scanner.
+ * It can scan an input string an return the JSON tokens
+ * found in the string (including error tokens).
+ */
 export class JSONScanner {
   #src: string;
   #index = 0;
@@ -228,11 +233,19 @@ export class JSONScanner {
     return this.#src[this.#index++] ?? EOF;
   }
 
+  /**
+   * Adjust the scanner #index so that the current char
+   * can be reconsumed in the given state.
+   * (This also switches to the given state.)
+   */
   #reconsumeInState(state: State) {
     this.#index--;
     this.#state = state;
   }
 
+  /**
+   * Emit a token, so that it may be returned when nextToken() is called.
+   */
   #emit(...tokens: Token[]) {
     // token.end = this.#index;
     this.#emittedTokens.push(...tokens);
@@ -252,7 +265,6 @@ function isWhitespace(c: string): boolean {
 }
 
 export interface Token {
-  end?: number;
   type:
     | "lbracket"
     | "lcurly"

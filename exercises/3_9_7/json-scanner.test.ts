@@ -1,7 +1,9 @@
-import * as assert from "node:assert/strict";
 import { test, expect } from "vitest";
-import { assertEachDeepEqual } from "../utils/test.js";
 import { scan, createToken as t, type Token } from "./json-scanner.js";
+
+test("can scan empty JSON", () => {
+  expect(scan(``)).toMatchObject([t.eof]);
+});
 
 test("can scan a plain/escaped string", () => {
   const jsons = [
@@ -73,6 +75,10 @@ test("errs on an invalid literal word", () => {
   expect(scan(`truee`)).toMatchObject([t.error, t.eof]);
   expect(scan(`dfalse`)).toMatchObject([t.error, t.eof]);
   expect(scan(`none`)).toMatchObject([t.error, t.eof]);
+});
+
+test("ignores whitespace", () => {
+  expect(scan(`   \n"hi" \t\r\n`)).toMatchObject([t.string, t.eof]);
 });
 
 test("can scan an array", () => {
