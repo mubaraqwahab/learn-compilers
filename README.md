@@ -2,8 +2,6 @@
 
 Based on the book, [_Introduction to Compilers and Language Design_](http://compilerbook.org).
 
-TODO: update readme!
-
 ## Setup
 
 1. You need to have these first:
