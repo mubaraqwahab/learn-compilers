@@ -26,6 +26,8 @@ This hand-made scanner works as a state machine, as described below. This descri
 
 TODO: Don't forget special chars like EOF, whitespace, and escape sequences.
 
+TODO: Early EOF and disallow multiline strings.
+
 TODO: Update this readme!
 
 The state machine starts in the value state.

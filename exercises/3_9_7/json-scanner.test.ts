@@ -115,3 +115,8 @@ test("can scan an object", () => {
     t.eof,
   ]);
 });
+
+test("errs on early eof", () => {
+  // TODO: what's the output?
+  expect(scan(`"hi`)).toMatchObject([t.error, t.error, t.eof]);
+});
