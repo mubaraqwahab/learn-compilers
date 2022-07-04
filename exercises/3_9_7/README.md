@@ -6,6 +6,13 @@ This hand-made scanner works as a state machine, as described below. This descri
 
 **Note:** The terms _scanner_, _lexer_, and _tokenizer_ are synonymous here.
 
+## Known issues
+
+* The JSON grammar disallows certain characters like slashes ("/" and "\\") and newlines ("\n" and "\r") within strings. (It only allows them when they are escaped.) This scanner _does_ allow them however. I didn't think of this until after almost completing the scanner.
+* The scanner is somewhat error-tolerant (i.e., it returns error tokens instead of throwing exceptions on an invalid input). The way it handles error tokens is quite messy and inconsistent though. (Well, that's how it appears to me 🙂).
+
+I wonder how standards committees verify the correctness of the grammars they specify. Especially grammars for large languages!
+
 ## Tokens
 
 - left square bracket
@@ -14,21 +21,14 @@ This hand-made scanner works as a state machine, as described below. This descri
 - right curly bracket
 - colon
 - comma
-- strings
-- numbers
-- true
-- false
+- string
+- number
+- boolean
 - null
-- eof
+- eof (end of file)
 - error
 
 ## State machine
-
-TODO: Don't forget special chars like EOF, whitespace, and escape sequences.
-
-TODO: Early EOF and disallow multiline strings.
-
-TODO: Update this readme!
 
 The state machine starts in the value state.
 
@@ -45,7 +45,7 @@ Consume the next input character:
 - **" double quotes:** switch to the string state.
 - **- minus:** switch to the number start state.
 - **digit:** reconsume the current character in the number state.
-- **lowercase character:** set the buffer to an empty string. Append the current character to the buffer. Switch to the literal name state.
+- **lowercase character:** set the buffer to the current character. Switch to the literal name state.
 - **whitespace character:** ignore.
 - **eof:** emit an eof token.
 - **anything else:** emit an error token.
@@ -56,6 +56,7 @@ Consume the next input character:
 
 - **" double quote:** emit a string token. Switch to the value state.
 - **\ backslash:** switch to the string escape state.
+- **eof:** emit an error token. Reconsume the current character in the value state.
 - **anything else:** do nothing.
 
 ### String escape state
@@ -67,7 +68,9 @@ Consume the next input character. Switch to the string state.
 Consume the next input character.
 
 - **lowercase character:** append the current character to the buffer.
-- **anything else:** if the string in the buffer is equal to "true" or "false", emit a boolean token. If the string is equal to "null", emit a null token. Otherwise, emit an error token. Reconsume the current character in the value state.
+- **anything else:** if the string in the buffer is equal to "true" or "false", emit a boolean token. If the string is equal to "null", emit a null token. Otherwise, emit an error token. In any case, reconsume the current character in the value state.
+
+**Note:** A buffer is technically not needed. This literal name state could instead be expanded into multiple states where each literal character causes a transition from one of the states to another (e.g. A --t--> B --r--> C --u--> D --e--> F, where the uppercase letters are states). However, that would be tedious.
 
 ### Number start state
 
@@ -90,6 +93,7 @@ Consume the next input character:
 
 - **fullstop:** switch to the number fraction start state
 - **lowercase or uppercase E:** switch to the number exponent sign state.
+- **digit:** emit a number token and an error token. Reconsume the current character in the value state.
 - **anything else:** emit a number token. Reconsume the current character in the value state.
 
 ### Number fraction start state
@@ -97,7 +101,7 @@ Consume the next input character:
 Consume the next input character:
 
 - **digit:** switch to the number fraction state.
-- **anything else:** emit an error token and switch to the value state.
+- **anything else:** emit a number token and an error token (for the erroneous dot), then reconsume in the value state.
 
 ### Number fraction state
 
@@ -111,15 +115,22 @@ Consume the next input character:
 
 Consume the next input character:
 
-- **plus or minus:** Switch to the number exponent start state
-- **anything else:** Reconsume in the exponent start state.
+- **plus or minus:** Switch to the number exponent signed start state.
+- **anything else:** Reconsume in the number exponent unsigned start state.
 
-### Number exponent start state
+### Number exponent signed start state
 
 Consume the next input character:
 
 - **digit:** switch to the number exponent state.
-- **anything else:** emit an error token and switch to the value state.
+- **anything else:** emit a number token (for the int) and two error tokens (for the erroneous e and sign). Reconsume in the value state.
+
+### Number exponent unsigned start state
+
+Consume the next input character:
+
+- **digit:** switch to the number exponent state.
+- **anything else:** emit a number token and an error token, then reconsume in the value state.
 
 ### Number exponent state
 

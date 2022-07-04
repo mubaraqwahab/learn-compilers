@@ -62,17 +62,17 @@ export class JSONScanner {
     value: () => {
       const c = this.#nextChar();
       if (c === "{") {
-        this.#emit({ type: "lcurly" });
+        this.#emit(t.lcurly);
       } else if (c === "[") {
-        this.#emit({ type: "lbracket" });
+        this.#emit(t.lbracket);
       } else if (c === "}") {
-        this.#emit({ type: "rcurly" });
+        this.#emit(t.rcurly);
       } else if (c === "]") {
-        this.#emit({ type: "rbracket" });
+        this.#emit(t.rbracket);
       } else if (c === ":") {
-        this.#emit({ type: "colon" });
+        this.#emit(t.colon);
       } else if (c === ",") {
-        this.#emit({ type: "comma" });
+        this.#emit(t.comma);
       } else if (c === '"') {
         this.#state = "string";
       } else if (c === "-") {
@@ -85,19 +85,22 @@ export class JSONScanner {
       } else if (isWhitespace(c)) {
         // noop
       } else if (c === EOF) {
-        this.#emit({ type: "eof" });
+        this.#emit(t.eof);
       } else {
-        this.#emit({ type: "error" });
+        this.#emit(t.error);
       }
     },
 
     string: () => {
       const c = this.#nextChar();
       if (c === '"') {
-        this.#emit({ type: "string" });
+        this.#emit(t.string);
         this.#state = "value";
       } else if (c === "\\") {
         this.#state = "stringEscape";
+      } else if (c === EOF) {
+        this.#emit(t.error);
+        this.#reconsumeInState("value");
       } else {
         // noop
       }
@@ -114,11 +117,11 @@ export class JSONScanner {
         this.#buffer += c;
       } else {
         if (this.#buffer === "true" || this.#buffer === "false") {
-          this.#emit({ type: "boolean" });
+          this.#emit(t.boolean);
         } else if (this.#buffer === "null") {
-          this.#emit({ type: "null" });
+          this.#emit(t.null);
         } else {
-          this.#emit({ type: "error" });
+          this.#emit(t.error);
         }
         this.#reconsumeInState("value");
       }
@@ -131,7 +134,7 @@ export class JSONScanner {
       } else if (isDigit(c)) {
         this.#state = "numberInt";
       } else {
-        this.#emit({ type: "error" });
+        this.#emit(t.error);
         this.#reconsumeInState("value");
       }
     },
@@ -151,8 +154,11 @@ export class JSONScanner {
         this.#state = "numberFractionStart";
       } else if (c === "e" || c === "E") {
         this.#state = "numberExponentSign";
+      } else if (isDigit(c)) {
+        this.#emit(t.number, t.error);
+        this.#reconsumeInState("value");
       } else {
-        this.#emit({ type: "number" });
+        this.#emit(t.number);
         this.#reconsumeInState("value");
       }
     },
@@ -163,8 +169,8 @@ export class JSONScanner {
         this.#state = "numberFraction";
       } else {
         this.#emit(
-          { type: "number" }, // the int
-          { type: "error" } // the dot
+          t.number, // the int
+          t.error // the dot
         );
         this.#reconsumeInState("value");
       }
@@ -177,7 +183,7 @@ export class JSONScanner {
       } else if (c === "e" || c === "E") {
         this.#state = "numberExponentSign";
       } else {
-        this.#emit({ type: "number" });
+        this.#emit(t.number);
         this.#reconsumeInState("value");
       }
     },
@@ -197,9 +203,9 @@ export class JSONScanner {
         this.#state = "numberExponent";
       } else {
         this.#emit(
-          { type: "number" }, // the int
-          { type: "error" }, // the 'e'
-          { type: "error" } // the sign
+          t.number, // the int
+          t.error, // the 'e'
+          t.error // the sign
         );
         this.#reconsumeInState("value");
       }
@@ -211,8 +217,8 @@ export class JSONScanner {
         this.#state = "numberExponent";
       } else {
         this.#emit(
-          { type: "number" }, // the int
-          { type: "error" } // the 'e'
+          t.number, // the int
+          t.error // the 'e'
         );
         this.#reconsumeInState("value");
       }
@@ -223,7 +229,7 @@ export class JSONScanner {
       if (isDigit(c)) {
         // noop
       } else {
-        this.#emit({ type: "number" });
+        this.#emit(t.number);
         this.#reconsumeInState("value");
       }
     },

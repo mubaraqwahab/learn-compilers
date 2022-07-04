@@ -40,14 +40,22 @@ test("can scan a number", () => {
 test("errs on an invalid number", () => {
   expect(scan(`2.`)).toMatchObject([t.number, t.error, t.eof]);
 
-  expect(scan(`.12`)).toMatchObject([t.error, t.number, t.eof]);
+  // Leading zero not allowed (unless the int part is just a zero).
+  expect(scan(`00`)).toMatchObject([t.number, t.error, t.number, t.eof]);
+  expect(scan(`01`)).toMatchObject([t.number, t.error, t.number, t.eof]);
 
+  // Missing zero before decimal point.
+  expect(scan(`.12`)).toMatchObject([t.error, t.number, t.eof]);
   expect(scan(`-.65`)).toMatchObject([t.error, t.error, t.number, t.eof]);
 
+  // Leading plus sign not allowed.
   expect(scan(`+10.33`)).toMatchObject([t.error, t.number, t.eof]);
 
+  // Float not allowed in exponent.
+  // This parses as: a number (-5.9e4), an erroneous dot, and a number (0).
   expect(scan(`-5.9e4.0`)).toMatchObject([t.number, t.error, t.number, t.eof]);
 
+  // Missing zero after decimal point.
   expect(scan(`1.e2`)).toMatchObject([
     t.number,
     t.error,
@@ -55,7 +63,6 @@ test("errs on an invalid number", () => {
     t.number,
     t.eof,
   ]);
-
   expect(scan(`7E.31`)).toMatchObject([
     t.number,
     t.error,
@@ -117,6 +124,7 @@ test("can scan an object", () => {
 });
 
 test("errs on early eof", () => {
-  // TODO: what's the output?
-  expect(scan(`"hi`)).toMatchObject([t.error, t.error, t.eof]);
+  expect(scan(`"hi`)).toMatchObject([t.error, t.eof]);
+  expect(scan(`-`)).toMatchObject([t.error, t.eof]);
+  // eof in literal (e.g. fals) is already tested in invalid literal test.
 });
