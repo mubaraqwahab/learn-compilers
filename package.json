@@ -5,7 +5,8 @@
     "test": "vitest"
   },
   "dependencies": {
-    "chevrotain": "^10.0.0"
+    "chevrotain": "^10.0.0",
+    "verbose-regexp": "^2.0.0"
   },
   "devDependencies": {
     "prettier": "2.7.1",
