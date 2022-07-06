@@ -10,4 +10,10 @@ test("can evaluate FOL expressions", () => {
   expect(evaluate(`( T -> F ) & T`)).toEqual(false);
 });
 
-test.todo("errors?");
+test("errs on invalid expressions", () => {
+  expect(() => evaluate(`T & `)).toThrow(/expected.*boolean.*\(.*found.*eof/i);
+  expect(() => evaluate(`| F`)).toThrow(/expected.*boolean.*\(.*found.*\|/i);
+  expect(() => evaluate(`() | F`)).toThrow(/expected.*boolean.*\(.*found.*\)/i);
+  expect(() => evaluate(`F( | F`)).toThrow(/unexpected.*\(/i);
+  expect(() => evaluate(`(T | F F`)).toThrow(/unexpected.*f/i);
+});

@@ -8,6 +8,10 @@ export function evaluate(src: string): boolean {
   return evaluator.eval();
 }
 
+/**
+ * A recursive descent parser to evaluate
+ * a simple first-order-logic expression
+ */
 class Evaluator {
   #src: string;
   #index = 0;
@@ -18,23 +22,27 @@ class Evaluator {
     this.#tokens = scan(src);
   }
 
+  /**
+   * Begin evaluation
+   */
   eval(): boolean {
-    this.#index = 0;
-
     const result = this.#evalImplication();
-
     this.#expect("eof");
-
     return result;
   }
 
   #expect(type: Token["type"]): void {
-    const next = this.#tokens[this.#index];
-    if (next?.type === type) {
+    const next = this.#tokens[this.#index]!;
+    if (next.type === type) {
       // consume
       this.#index++;
     } else {
-      throw new SyntaxError("bla bla");
+      const found = next.type === "eof" ? "eof" : `'${next.image}'`;
+      throw new SyntaxError(
+        `Unexpected ${found}:\n` +
+          `    ${this.#src}\n` +
+          `    ${"^".padStart(next.index + 1)}`
+      );
     }
   }
 
@@ -114,28 +122,12 @@ class Evaluator {
     } else if (token.type === "boolean") {
       return token.value;
     } else {
+      const found = token.type === "eof" ? "eof" : `'${token.image}'`;
       throw new SyntaxError(
-        `Expected a boolean or left bracket '(' but found '${image(token)}'`
+        `Expected a boolean or left bracket '(' but found ${found}:\n` +
+          `    ${this.#src}\n` +
+          `    ${"^".padStart(token.index + 1)}`
       );
     }
   }
-}
-
-function image(token: Token): string {
-  switch (token.type) {
-    case "impliesOp":
-      return "->";
-    case "orOp":
-      return "|";
-    case "andOp":
-      return "&";
-    case "notOp":
-      return "!";
-    case "groupStart":
-      return "(";
-    case "groupEnd":
-      return ")";
-  }
-
-  throw Error("TODO");
 }
