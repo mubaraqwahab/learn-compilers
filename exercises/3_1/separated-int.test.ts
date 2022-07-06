@@ -1,4 +1,4 @@
-// 3.9.1 (b)
+// Ch 3, ex 1(b)
 // Regex for integers where every 3 digits are separated by commas.
 
 import { test, expect } from "vitest";

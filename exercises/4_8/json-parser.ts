@@ -1,4 +1,4 @@
-import { scan, Token } from "../3_9_7/json-scanner.js";
+import { scan, Token } from "../3_7/json-scanner.js";
 
 /**
  * Validate a JSON string.

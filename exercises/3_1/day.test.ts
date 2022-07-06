@@ -1,4 +1,4 @@
-// 3.9.1 (a)
+// Ch 3, ex 1(a)
 // Regex for English days of the week
 
 import { test, expect } from "vitest";
