@@ -9,3 +9,5 @@ test("can evaluate FOL expressions", () => {
   expect(evaluate(`! ( T | F )`)).toEqual(false);
   expect(evaluate(`( T -> F ) & T`)).toEqual(false);
 });
+
+test.todo("errors?");

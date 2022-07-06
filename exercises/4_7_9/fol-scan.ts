@@ -1,27 +1,27 @@
-export const createToken: Record<Token["type"], (value?: any) => Token> = {
-  boolean(value: boolean) {
-    return { type: "boolean", value };
+export const createToken: Record<Token["type"], (...args: any[]) => Token> = {
+  boolean(value: boolean, index: number) {
+    return { type: "boolean", value, index };
   },
-  andOp() {
-    return { type: "andOp" };
+  andOp(index: number) {
+    return { type: "andOp", index };
   },
-  orOp() {
-    return { type: "orOp" };
+  orOp(index: number) {
+    return { type: "orOp", index };
   },
-  impliesOp() {
-    return { type: "impliesOp" };
+  impliesOp(index: number) {
+    return { type: "impliesOp", index };
   },
-  notOp() {
-    return { type: "notOp" };
+  notOp(index: number) {
+    return { type: "notOp", index };
   },
-  groupStart() {
-    return { type: "groupStart" };
+  groupStart(index: number) {
+    return { type: "groupStart", index };
   },
-  groupEnd() {
-    return { type: "groupEnd" };
+  groupEnd(index: number) {
+    return { type: "groupEnd", index };
   },
-  eof() {
-    return { type: "eof" };
+  eof(index: number) {
+    return { type: "eof", index };
   },
 };
 
@@ -66,11 +66,11 @@ export function scan(src: string): Token[] {
 }
 
 export type Token =
-  | { type: "boolean"; value: boolean }
-  | { type: "andOp" }
-  | { type: "orOp" }
-  | { type: "impliesOp" }
-  | { type: "notOp" }
-  | { type: "groupStart" }
-  | { type: "groupEnd" }
-  | { type: "eof" };
+  | { type: "boolean"; value: boolean; index: number }
+  | { type: "andOp"; index: number }
+  | { type: "orOp"; index: number }
+  | { type: "impliesOp"; index: number }
+  | { type: "notOp"; index: number }
+  | { type: "groupStart"; index: number }
+  | { type: "groupEnd"; index: number }
+  | { type: "eof"; index: number };
