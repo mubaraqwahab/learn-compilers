@@ -35,3 +35,5 @@ The gist of the solution is quoted here (emphasis mine) (the article builds an A
 > 2. <b>Depending on your grammar, some non-terminal functions may require an input parameter of an abstract syntax tree (ast) to be able to complete a partial ast that is recognized by the non-terminal function.</b>
 > 3. Each non-terminal function should call a function to get the next token as needed. If the next token is not needed, the non-terminal function should call another function to put back the token. Your parser (if it is based on an LL(1) grammar, should never have to get or put back more than one token at a time.
 > 4. The body of each non-terminal function should be be a series of if statements that choose which production right-handside to expand depending on the value of the next token.
+
+**Random thought:** I wonder why the book says "first-order logic" instead of "propositional logic" when there are no quantifiers (i.e. &forall;, &exist;) in the expressions it specifies. (See: [first-order logic](https://en.wikipedia.org/wiki/First-order_logic); [propositional logic](https://en.wikipedia.org/wiki/Propositional_logic).)
