@@ -31,6 +31,10 @@ class Evaluator {
     return result;
   }
 
+  /**
+   * Consume the next token if it matches the given type.
+   * Otherwise, throw a syntax error.
+   */
   #expect(type: Token["type"]): void {
     const next = this.#tokens[this.#index]!;
     if (next.type === type) {
@@ -66,9 +70,10 @@ class Evaluator {
       // (A -> B) equiv (not A or B)
       const result = !first || second;
       return this.#evalRestImplication(result);
+    } else {
+      this.#retreat();
+      return first;
     }
-    this.#retreat();
-    return first;
   }
 
   #evalDisjunction(): boolean {
@@ -82,9 +87,10 @@ class Evaluator {
       const second = this.#evalConjunction();
       const result = first || second;
       return this.#evalRestDisjunction(result);
+    } else {
+      this.#retreat();
+      return first;
     }
-    this.#retreat();
-    return first;
   }
 
   #evalConjunction(): boolean {
@@ -98,9 +104,10 @@ class Evaluator {
       const second = this.#evalTerm();
       const result = first && second;
       return this.#evalRestConjunction(result);
+    } else {
+      this.#retreat();
+      return first;
     }
-    this.#retreat();
-    return first;
   }
 
   #evalTerm(): boolean {
@@ -108,9 +115,10 @@ class Evaluator {
     if (token.type === "notOp") {
       const term = this.#evalTerm();
       return !term;
+    } else {
+      this.#retreat();
+      return this.#evalFactor();
     }
-    this.#retreat();
-    return this.#evalFactor();
   }
 
   #evalFactor(): boolean {
