@@ -1,0 +1,1 @@
+digraph { rankdir=LR; s0 -> s1 [label="&epsilon;"];s1 -> s2 [label="a"];s0 -> s3 [label="&epsilon;"];s3 -> s4 [label="b"];s2 -> s5 [label="&epsilon;"];s4 -> s5 [label="&epsilon;"]; }
