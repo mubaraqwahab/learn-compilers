@@ -1,4 +1,4 @@
-import { Node, parse } from "./regex-parser.js";
+import { type Node, parse } from "./regex-parser.js";
 
 /** Convert a regular expression to an NFA. */
 export function regexToNFA(regex: string): NFA {
