@@ -30,6 +30,9 @@ type NFAState = `s${number}`;
 /**
  * Convert a regular expression AST node to an NFA
  * using the McNaughton-Yamada-Thompson algorithm.
+ *
+ * Note that the set of transitions in the resulting NFA has
+ * a deterministic order. This is only important for testing!
  */
 function nodeToNFA(node: Node): NFA {
   switch (node.type) {
