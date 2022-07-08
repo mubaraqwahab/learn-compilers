@@ -5,10 +5,10 @@ async function draw(regex: string, outfile: string) {
   const nfa = regexToNFA(regex);
   let dump = "";
   nfa.transitions.forEach(([from, char, to]) => {
-    dump += `${from} -> ${to} [label=${labelify(char)}];`;
+    dump += `  ${from} -> ${to} [label=${labelify(char)}];\n`;
   });
 
-  dump = `digraph { rankdir=LR; ${dump} }`;
+  dump = `digraph {\n  rankdir=LR;\n${dump}}`;
 
   await writeFile(outfile, dump);
 }

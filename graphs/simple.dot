@@ -1,1 +1,4 @@
-digraph { rankdir=LR; s0 -> s1 [label="a"]; }
+digraph {
+  rankdir=LR;
+  s0 -> s1 [label="a"];
+}
