@@ -1,21 +1,37 @@
 import { Node, parse } from "./regex-parser.js";
 
-/**
- * Convert a regular expression to an NFA
- * using the McNaughton-Yamada-Thompson algorithm.
- */
-export function regexToNFA(regex: string) {
+/** Convert a regular expression to an NFA. */
+export function regexToNFA(regex: string): NFA {
   const ast = parse(regex);
   return nodeToNFA(ast);
 }
+
+export interface NFA {
+  // No need for an explicit initial state;
+  // the initial state will always be 's0'
+  final: NFAState;
+  /**
+   * A set of transition tuples.
+   *
+   * This property is a *set* and not an *array*
+   * because the order of the tuples don't matter.
+   */
+  transitions: Set<Transition>;
+}
+
+/**
+ * A tuple `[S1, char, S2]` denotes a transition
+ * from state `S1` to state `S2` through `char`.
+ */
+type Transition = [NFAState, string, NFAState];
+
+type NFAState = `s${number}`;
 
 /**
  * Convert a regular expression AST node to an NFA
  * using the McNaughton-Yamada-Thompson algorithm.
  */
 function nodeToNFA(node: Node): NFA {
-  // TODO: Refactor and cleanup!
-
   switch (node.type) {
     case "Literal": {
       const nfa: NFA = {
@@ -30,80 +46,88 @@ function nodeToNFA(node: Node): NFA {
       const rightNFA = nodeToNFA(node.right);
       const transitions = new Set(leftNFA.transitions);
 
-      const leftFinalId = id(leftNFA.final);
-      const rightFinalId = id(rightNFA.final);
+      // The first right state intersects the last left state.
+      const rightOffset = id(leftNFA.final);
+      const shiftRightState = (state: NFAState) => shift(state, rightOffset);
 
-      rightNFA.transitions.forEach(([from, char, to]) => {
-        const newFrom: NFAState = `s${id(from) + leftFinalId}`;
-        const newTo: NFAState = `s${id(to) + leftFinalId}`;
-        transitions.add([newFrom, char, newTo]);
-      });
+      shiftTransitions(rightNFA.transitions, transitions, shiftRightState);
 
-      const nfa: NFA = {
-        final: `s${rightFinalId + leftFinalId}`,
+      return {
+        final: shiftRightState(rightNFA.final),
         transitions,
       };
-
-      return nfa;
     }
 
     case "Union": {
       const leftNFA = nodeToNFA(node.left);
       const rightNFA = nodeToNFA(node.right);
 
-      const transitions: NFA["transitions"] = new Set([["s0", "", "s1"]]);
+      const transitions = new Set<Transition>();
 
-      leftNFA.transitions.forEach(([from, char, to]) => {
-        const newFrom: NFAState = `s${id(from) + 1}`;
-        const newTo: NFAState = `s${id(to) + 1}`;
-        transitions.add([newFrom, char, newTo]);
-      });
+      const leftOffset = 1;
+      const shiftLeftState = (state: NFAState) => shift(state, leftOffset);
 
-      const rightOffset = id(leftNFA.final) + 1 + 1;
-      transitions.add(["s0", "", `s${rightOffset}`]);
+      transitions.add(["s0", "", shiftLeftState("s0")]);
+      shiftTransitions(leftNFA.transitions, transitions, shiftLeftState);
 
-      rightNFA.transitions.forEach(([from, char, to]) => {
-        const newFrom: NFAState = `s${id(from) + rightOffset}`;
-        const newTo: NFAState = `s${id(to) + rightOffset}`;
-        transitions.add([newFrom, char, newTo]);
-      });
+      const rightOffset = id(shiftLeftState(leftNFA.final)) + 1;
+      const shiftRightState = (state: NFAState) => shift(state, rightOffset);
 
-      const final: NFAState = `s${id(rightNFA.final) + rightOffset + 1}`;
+      transitions.add(["s0", "", shiftRightState("s0")]);
+      shiftTransitions(rightNFA.transitions, transitions, shiftRightState);
 
-      const newLeftFinal: NFAState = `s${id(leftNFA.final) + 1}`;
-      const newRightFinal: NFAState = `s${id(rightNFA.final) + rightOffset}`;
+      const newLeftFinal = shiftLeftState(leftNFA.final);
+      const newRightFinal = shiftRightState(rightNFA.final);
+      const final = nextByID(newRightFinal);
+
       transitions.add([newLeftFinal, "", final]);
       transitions.add([newRightFinal, "", final]);
 
-      const nfa: NFA = { final, transitions };
-
-      return nfa;
+      return { final, transitions };
     }
 
     case "Kleene": {
       const argNFA = nodeToNFA(node.argument);
       const transitions: NFA["transitions"] = new Set([["s0", "", "s1"]]);
 
-      argNFA.transitions.forEach(([from, char, to]) => {
-        const newFrom: NFAState = `s${id(from) + 1}`;
-        const newTo: NFAState = `s${id(to) + 1}`;
-        transitions.add([newFrom, char, newTo]);
-      });
+      const shiftArgState = (state: NFAState) => shift(state, 1);
 
-      const newArgFinal: NFAState = `s${id(argNFA.final) + 1}`;
-      const final: NFAState = `s${id(argNFA.final) + 2}`;
+      shiftTransitions(argNFA.transitions, transitions, shiftArgState);
+
+      const newArgFinal = shiftArgState(argNFA.final);
+      const final = nextByID(newArgFinal);
+
       transitions.add([newArgFinal, "", "s1"]);
       transitions.add([newArgFinal, "", final]);
       transitions.add(["s0", "", final]);
 
-      const nfa: NFA = { final, transitions };
-      return nfa;
+      return { final, transitions };
     }
 
     case "RegEx": {
       return nodeToNFA(node.body);
     }
   }
+}
+
+/**
+ * Shift each transition in `srcSet` and copy the result into `destSet`.
+ *
+ * To shift a transition `[S1, char, S2]` is to create a new
+ * transition `[S1prime, char, S2prime]` such that these hold:
+ *  * `S1prime === shiftState(S1)`
+ *  * `S2prime === shiftState(S2)`
+ */
+function shiftTransitions(
+  srcSet: Set<Transition>,
+  destSet: Set<Transition>,
+  shiftState: (state: NFAState) => NFAState
+) {
+  srcSet.forEach(([from, char, to]) => {
+    const newFrom = shiftState(from);
+    const newTo = shiftState(to);
+    destSet.add([newFrom, char, newTo]);
+  });
 }
 
 /**
@@ -115,17 +139,22 @@ function id(state: NFAState): number {
   return +state.slice(1);
 }
 
-export interface NFA {
-  // No need for an explicit initial state;
-  // the initial state will always be 's0'
-  final: NFAState;
-  /**
-   * An set of tuples [S1, char, S2] where each tuple
-   * denotes a transition from state S1 to state S2 through char.
-   * This property is a *set* not an *array* because the order of
-   * the tuples don't matter.
-   */
-  transitions: Set<[NFAState, string, NFAState]>;
+/**
+ * Shift an NFA state by a given offset.
+ * @example
+ * shift("s1", 2) === "s3"
+ */
+function shift(state: NFAState, offset: number): NFAState {
+  const stateId = id(state);
+  const newId = stateId + offset;
+  return `s${newId}`;
 }
 
-type NFAState = `s${number}`;
+/**
+ * Get the next state (in ID order) after a given state.
+ * @example
+ * next("s1") === "s2"
+ */
+function nextByID(state: NFAState): NFAState {
+  return shift(state, 1);
+}

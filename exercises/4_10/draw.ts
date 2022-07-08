@@ -23,5 +23,5 @@ function labelify(char: string): string {
   draw("ab", "graphs/concat.dot");
   draw("a|b", "graphs/union.dot");
   draw("a*", "graphs/kleene.dot");
-  draw("(a|b)*abb", "graphs/complex.dot");
+  draw("(ab|c)*abb", "graphs/complex.dot");
 })();
