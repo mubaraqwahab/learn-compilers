@@ -63,8 +63,9 @@ test("errs on an invalid number", () => {
     t.number,
     t.eof,
   ]);
-  expect(scan(`7E.31`)).toMatchObject([
+  expect(scan(`7E+a31`)).toMatchObject([
     t.number,
+    t.error,
     t.error,
     t.error,
     t.number,
