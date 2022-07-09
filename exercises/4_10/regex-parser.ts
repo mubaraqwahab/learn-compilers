@@ -113,7 +113,7 @@ class Parser {
     else if ("|*)".includes(char)) {
       this.#error();
     }
-    // Match an alphabet char
+    // Match a non-metacharacter
     else {
       const literal = n.literal(char);
       return literal;
