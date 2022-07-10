@@ -3,7 +3,7 @@
 The grammar for the simple logic expressions follows (terminals are in lowercase or enclosed in quotes):
 
 ```
-FOL -> Impl eof
+FOL -> Impl
 Impl -> Impl "->" Disj | Disj
 Disj -> Disj "|" Conj | Conj
 Conj -> Conj "&" Term | Term
@@ -16,7 +16,7 @@ Factor -> "T" | "F" | "(" Impl ")"
 Here's the grammar rewritten in LL(1) form:
 
 ```
-FOL -> Impl eof
+FOL -> Impl
 Impl -> Disj RImpl
 RImpl -> "->" Disj RImpl | eps
 Disj -> Conj RDisj

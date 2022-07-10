@@ -29,3 +29,5 @@ FOLLOW(RightElements) = { rbracket }
 FOLLOW(Entries) = { rcurly }
 FOLLOW(RightEntries) = { rcurly }
 ```
+
+**PS,** `eof` is the end-of-file token.

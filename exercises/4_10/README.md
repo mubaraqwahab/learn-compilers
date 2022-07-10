@@ -3,7 +3,7 @@
 The regex grammar I came up with, in LL(1):
 
 ```
-RE -> Union eof
+RE -> Union
 Union -> Concat RestUnion
 RestUnion -> "|" Concat RestUnion | ε
 Concat -> Kleene RestConcat
