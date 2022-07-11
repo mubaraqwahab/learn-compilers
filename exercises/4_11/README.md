@@ -1,5 +1,86 @@
 TODO:
 
+Grammar spec should look like:
+
+```
+# Lexical definition
+
+boolean -> "true|false"
+null -> "null"
+lbracket -> "\[" # escape a regex metachar
+rbracket -> "]"
+lcurly -> "{"
+rcurly -> "}"
+colon -> ":"
+comma -> ","
+string -> "\".*\""
+
+---
+
+# Syntax definition
+
+JSON -> Value | eps # eps is an implicit token for the empty string.
+Value -> boolean | null | string | Array
+Array -> lbracket Elements rbracket
+Elements -> Value RestElements
+RestElements -> comma RestElements
+RestElements -> eps # no choice operator here
+```
+
+## Meta-grammar
+
+```
+nonterminal -> "[A-Z][A-Za-z0-9]*"
+terminal -> "[a-z][a-z0-9_]*"
+epsKeyword -> "eps"
+regex -> "\"(\\.|[^\"\\])\""
+defSeparator -> "---"
+prodOp -> "->"
+choiceOp -> "\|"
+comment -> "#.*"
+newline -> "\r\n?|\n"
+wsNoNewline -> "( \t)+"
+
+---
+
+# How to: newlines?
+# How to: whitespace?
+# How to: comments?
+Grammar -> newline* LexicalDef def_separator newline* SyntaxDef
+LexicalDef -> (CommentNl* LexicalRule)+
+LexicalRule -> terminal prod_op regex comment? newline+
+SyntaxDef -> (CommentNl* SyntaxRule)+
+SyntaxRule -> nonterminal prod_op Choices comment? newline+
+Choices -> Sentential (choice_op Sentential)*
+Sentential -> Unit+
+Unit -> nonterminal | terminal
+CommentNl -> comment newline+
+
+# In basic LL(1) form:
+
+Grammar -> OptionalNewlines LexicalDef def_separator OptionalNewlines SyntaxDef
+
+LexicalDef -> OptionalCommentNls LexicalRule RestLexicalDef
+RestLexicalDef -> eps | LexicalDef
+LexicalRule -> terminal prod_op regex OptionalCommentThenNls
+
+SyntaxDef -> OptionalCommentNls SyntaxRule RestSyntaxDef
+RestSyntaxDef -> eps | SyntaxDef
+SyntaxRule -> nonterminal prod_op Choices OptionalCommentThenNls
+
+Choices -> Sentential RestChoices
+RestChoices -> eps | choice_op Sentential RestChoices
+Sentential -> Unit RestSentential
+RestSentential -> eps | Sentential
+Unit -> nonterminal | terminal
+
+OptionalCommentThenNls -> OptionalComment OneOrMoreNewlines
+OptionalCommentNls -> eps | comment OneOrMoreNewlines OptionalCommentNls
+OneOrMoreNewlines -> newline OptionalNewlines
+OptionalNewlines -> eps | OneOrMoreNewlines
+OptionalComment -> eps | comment
+```
+
 Consider one of these patterns:
 
 ## Parser "constructor"

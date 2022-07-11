@@ -6,9 +6,11 @@
   },
   "dependencies": {
     "chevrotain": "^10.0.0",
+    "dedent": "^0.7.0",
     "verbose-regexp": "^2.0.0"
   },
   "devDependencies": {
+    "@types/dedent": "^0.7.0",
     "c8": "^7.11.3",
     "prettier": "2.7.1",
     "ts-node": "^10.8.1",
