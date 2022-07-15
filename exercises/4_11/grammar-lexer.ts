@@ -1,73 +1,72 @@
 import { createToken, Lexer } from "chevrotain";
 import { rx } from "verbose-regexp";
 
-const WhitespaceNoNewline = createToken({
-  name: "WhitespaceNoNewline",
-  pattern: /( |\t)+/,
-  group: Lexer.SKIPPED,
-});
+export const tokensDict = {
+  WhitespaceNoNewline: createToken({
+    name: "WhitespaceNoNewline",
+    pattern: /( |\t)+/,
+    group: Lexer.SKIPPED,
+  }),
 
-const Newline = createToken({
-  name: "Newline",
-  pattern: /\r\n?|\n/,
-});
+  Newline: createToken({
+    name: "Newline",
+    pattern: /\r\n?|\n/,
+  }),
 
-const Nonterminal = createToken({
-  name: "Nonterminal",
-  pattern: /[A-Z][A-Za-z0-9]*/,
-});
+  Nonterminal: createToken({
+    name: "Nonterminal",
+    pattern: /[A-Z][A-Za-z0-9]*/,
+  }),
 
-const Terminal = createToken({
-  name: "Terminal",
-  pattern: /[a-z][a-z0-9_]*/,
-});
+  Terminal: createToken({
+    name: "Terminal",
+    pattern: /[a-z][A-Za-z0-9]*/,
+  }),
 
-const EpsilonKeyword = createToken({
-  name: "EpsilonKeyword",
-  pattern: /eps/,
-  longer_alt: Terminal,
-});
+  Regex: createToken({
+    name: "Regex",
+    pattern: rx`
+      "(
+        \\. // escape sequences
+        |
+        [^"\\] // any char except " or \
+      )*"
+    `,
+  }),
 
-const Regex = createToken({
-  name: "Regex",
-  pattern: rx`
-    "(
-      \\. // escape sequences
-      |
-      [^"\\] // any char except " or \
-    )*"
-  `,
-});
+  DefSeparator: createToken({
+    name: "DefSeparator",
+    pattern: "---",
+  }),
 
-const DefSeparator = createToken({
-  name: "DefSeparator",
-  pattern: /---/,
-});
+  ProductionOperator: createToken({
+    name: "ProductionOperator",
+    pattern: "->",
+  }),
 
-const ProductionOperator = createToken({
-  name: "ProductionOperator",
-  pattern: /->/,
-});
+  ChoiceOperator: createToken({
+    name: "ChoiceOperator",
+    pattern: "|",
+  }),
 
-const ChoiceOperator = createToken({
-  name: "ChoiceOperator",
-  pattern: /\|/,
-});
+  Comment: createToken({
+    name: "Comment",
+    pattern: /#.*/,
+  }),
+};
 
-const Comment = createToken({
-  name: "Comment",
-  pattern: /#.*/,
-});
+const t = tokensDict;
 
-export const lexer = new Lexer([
-  WhitespaceNoNewline,
-  Newline,
-  Nonterminal,
-  EpsilonKeyword, // this precedes Terminal
-  Terminal,
-  Regex,
-  ProductionOperator,
-  ChoiceOperator,
-  Comment,
-  DefSeparator,
-]);
+export const allTokens = [
+  t.WhitespaceNoNewline,
+  t.Newline,
+  t.Nonterminal,
+  t.Terminal,
+  t.Regex,
+  t.ProductionOperator,
+  t.ChoiceOperator,
+  t.Comment,
+  t.DefSeparator,
+];
+
+export const lexer = new Lexer(allTokens);

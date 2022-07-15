@@ -1,3 +1,5 @@
+**I've suspended this for now; it's taking so much of my time :(**
+
 TODO:
 
 Grammar spec should look like:
@@ -81,6 +83,8 @@ OptionalNewlines -> eps | OneOrMoreNewlines
 OptionalComment -> eps | comment
 ```
 
+---
+
 Consider one of these patterns:
 
 ## Parser "constructor"
@@ -127,3 +131,5 @@ expect(parse(notMyLangText)).toEqual(false)
 ```
 
 This second approach might be tricky to get!
+
+Also consider using chevrotain in the generated parser, instead of manually creating a parse table.

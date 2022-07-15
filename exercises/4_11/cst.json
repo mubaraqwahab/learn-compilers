@@ -1,0 +1,805 @@
+{
+  "name": "Grammar",
+  "children": {
+    "Newline": [
+      {
+        "image": "\n",
+        "startOffset": 0,
+        "endOffset": 0,
+        "startLine": 1,
+        "endLine": 1,
+        "startColumn": 1,
+        "endColumn": 1,
+        "tokenTypeIdx": 4,
+        "tokenType": {
+          "name": "Newline",
+          "PATTERN": {},
+          "tokenTypeIdx": 4,
+          "CATEGORIES": [],
+          "categoryMatches": [],
+          "categoryMatchesMap": {},
+          "isParent": false
+        }
+      },
+      {
+        "image": "\n",
+        "startOffset": 92,
+        "endOffset": 92,
+        "startLine": 5,
+        "endLine": 5,
+        "startColumn": 4,
+        "endColumn": 4,
+        "tokenTypeIdx": 4,
+        "tokenType": {
+          "name": "Newline",
+          "PATTERN": {},
+          "tokenTypeIdx": 4,
+          "CATEGORIES": [],
+          "categoryMatches": [],
+          "categoryMatchesMap": {},
+          "isParent": false
+        }
+      }
+    ],
+    "LexicalDef": [
+      {
+        "name": "LexicalDef",
+        "children": {
+          "Comment": [
+            {
+              "image": "# Lexical definition",
+              "startOffset": 1,
+              "endOffset": 20,
+              "startLine": 2,
+              "endLine": 2,
+              "startColumn": 1,
+              "endColumn": 20,
+              "tokenTypeIdx": 11,
+              "tokenType": {
+                "name": "Comment",
+                "PATTERN": {},
+                "tokenTypeIdx": 11,
+                "CATEGORIES": [],
+                "categoryMatches": [],
+                "categoryMatchesMap": {},
+                "isParent": false
+              }
+            }
+          ],
+          "Newline": [
+            {
+              "image": "\n",
+              "startOffset": 21,
+              "endOffset": 21,
+              "startLine": 2,
+              "endLine": 2,
+              "startColumn": 21,
+              "endColumn": 21,
+              "tokenTypeIdx": 4,
+              "tokenType": {
+                "name": "Newline",
+                "PATTERN": {},
+                "tokenTypeIdx": 4,
+                "CATEGORIES": [],
+                "categoryMatches": [],
+                "categoryMatchesMap": {},
+                "isParent": false
+              }
+            }
+          ],
+          "LexicalRule": [
+            {
+              "name": "LexicalRule",
+              "children": {
+                "Terminal": [
+                  {
+                    "image": "integer",
+                    "startOffset": 22,
+                    "endOffset": 28,
+                    "startLine": 3,
+                    "endLine": 3,
+                    "startColumn": 1,
+                    "endColumn": 7,
+                    "tokenTypeIdx": 6,
+                    "tokenType": {
+                      "name": "Terminal",
+                      "PATTERN": {},
+                      "tokenTypeIdx": 6,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "ProductionOperator": [
+                  {
+                    "image": "->",
+                    "startOffset": 30,
+                    "endOffset": 31,
+                    "startLine": 3,
+                    "endLine": 3,
+                    "startColumn": 9,
+                    "endColumn": 10,
+                    "tokenTypeIdx": 9,
+                    "tokenType": {
+                      "name": "ProductionOperator",
+                      "PATTERN": "->",
+                      "tokenTypeIdx": 9,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "Regex": [
+                  {
+                    "image": "\"[0-9]+\"",
+                    "startOffset": 33,
+                    "endOffset": 40,
+                    "startLine": 3,
+                    "endLine": 3,
+                    "startColumn": 12,
+                    "endColumn": 19,
+                    "tokenTypeIdx": 7,
+                    "tokenType": {
+                      "name": "Regex",
+                      "PATTERN": {},
+                      "tokenTypeIdx": 7,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "OptionalCommentThenNewlines": [
+                  {
+                    "name": "OptionalCommentThenNewlines",
+                    "children": {
+                      "Newline": [
+                        {
+                          "image": "\n",
+                          "startOffset": 41,
+                          "endOffset": 41,
+                          "startLine": 3,
+                          "endLine": 3,
+                          "startColumn": 20,
+                          "endColumn": 20,
+                          "tokenTypeIdx": 4,
+                          "tokenType": {
+                            "name": "Newline",
+                            "PATTERN": {},
+                            "tokenTypeIdx": 4,
+                            "CATEGORIES": [],
+                            "categoryMatches": [],
+                            "categoryMatchesMap": {},
+                            "isParent": false
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "LexicalRule",
+              "children": {
+                "Terminal": [
+                  {
+                    "image": "additiveOp",
+                    "startOffset": 42,
+                    "endOffset": 51,
+                    "startLine": 4,
+                    "endLine": 4,
+                    "startColumn": 1,
+                    "endColumn": 10,
+                    "tokenTypeIdx": 6,
+                    "tokenType": {
+                      "name": "Terminal",
+                      "PATTERN": {},
+                      "tokenTypeIdx": 6,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "ProductionOperator": [
+                  {
+                    "image": "->",
+                    "startOffset": 53,
+                    "endOffset": 54,
+                    "startLine": 4,
+                    "endLine": 4,
+                    "startColumn": 12,
+                    "endColumn": 13,
+                    "tokenTypeIdx": 9,
+                    "tokenType": {
+                      "name": "ProductionOperator",
+                      "PATTERN": "->",
+                      "tokenTypeIdx": 9,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "Regex": [
+                  {
+                    "image": "\"\\+|-\"",
+                    "startOffset": 56,
+                    "endOffset": 61,
+                    "startLine": 4,
+                    "endLine": 4,
+                    "startColumn": 15,
+                    "endColumn": 20,
+                    "tokenTypeIdx": 7,
+                    "tokenType": {
+                      "name": "Regex",
+                      "PATTERN": {},
+                      "tokenTypeIdx": 7,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "OptionalCommentThenNewlines": [
+                  {
+                    "name": "OptionalCommentThenNewlines",
+                    "children": {
+                      "Comment": [
+                        {
+                          "image": "# escape a regex metachar",
+                          "startOffset": 63,
+                          "endOffset": 87,
+                          "startLine": 4,
+                          "endLine": 4,
+                          "startColumn": 22,
+                          "endColumn": 46,
+                          "tokenTypeIdx": 11,
+                          "tokenType": {
+                            "name": "Comment",
+                            "PATTERN": {},
+                            "tokenTypeIdx": 11,
+                            "CATEGORIES": [],
+                            "categoryMatches": [],
+                            "categoryMatchesMap": {},
+                            "isParent": false
+                          }
+                        }
+                      ],
+                      "Newline": [
+                        {
+                          "image": "\n",
+                          "startOffset": 88,
+                          "endOffset": 88,
+                          "startLine": 4,
+                          "endLine": 4,
+                          "startColumn": 47,
+                          "endColumn": 47,
+                          "tokenTypeIdx": 4,
+                          "tokenType": {
+                            "name": "Newline",
+                            "PATTERN": {},
+                            "tokenTypeIdx": 4,
+                            "CATEGORIES": [],
+                            "categoryMatches": [],
+                            "categoryMatchesMap": {},
+                            "isParent": false
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "DefSeparator": [
+      {
+        "image": "---",
+        "startOffset": 89,
+        "endOffset": 91,
+        "startLine": 5,
+        "endLine": 5,
+        "startColumn": 1,
+        "endColumn": 3,
+        "tokenTypeIdx": 8,
+        "tokenType": {
+          "name": "DefSeparator",
+          "PATTERN": "---",
+          "tokenTypeIdx": 8,
+          "CATEGORIES": [],
+          "categoryMatches": [],
+          "categoryMatchesMap": {},
+          "isParent": false
+        }
+      }
+    ],
+    "SyntaxDef": [
+      {
+        "name": "SyntaxDef",
+        "children": {
+          "CommentThenNewlines": [
+            {
+              "name": "CommentThenNewlines",
+              "children": {
+                "Comment": [
+                  {
+                    "image": "# Syntax definition",
+                    "startOffset": 93,
+                    "endOffset": 111,
+                    "startLine": 6,
+                    "endLine": 6,
+                    "startColumn": 1,
+                    "endColumn": 19,
+                    "tokenTypeIdx": 11,
+                    "tokenType": {
+                      "name": "Comment",
+                      "PATTERN": {},
+                      "tokenTypeIdx": 11,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "Newline": [
+                  {
+                    "image": "\n",
+                    "startOffset": 112,
+                    "endOffset": 112,
+                    "startLine": 6,
+                    "endLine": 6,
+                    "startColumn": 20,
+                    "endColumn": 20,
+                    "tokenTypeIdx": 4,
+                    "tokenType": {
+                      "name": "Newline",
+                      "PATTERN": {},
+                      "tokenTypeIdx": 4,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "SyntaxRule": [
+            {
+              "name": "SyntaxRule",
+              "children": {
+                "Nonterminal": [
+                  {
+                    "image": "Expression",
+                    "startOffset": 113,
+                    "endOffset": 122,
+                    "startLine": 7,
+                    "endLine": 7,
+                    "startColumn": 1,
+                    "endColumn": 10,
+                    "tokenTypeIdx": 5,
+                    "tokenType": {
+                      "name": "Nonterminal",
+                      "PATTERN": {},
+                      "tokenTypeIdx": 5,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "ProductionOperator": [
+                  {
+                    "image": "->",
+                    "startOffset": 124,
+                    "endOffset": 125,
+                    "startLine": 7,
+                    "endLine": 7,
+                    "startColumn": 12,
+                    "endColumn": 13,
+                    "tokenTypeIdx": 9,
+                    "tokenType": {
+                      "name": "ProductionOperator",
+                      "PATTERN": "->",
+                      "tokenTypeIdx": 9,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "Choices": [
+                  {
+                    "name": "Choices",
+                    "children": {
+                      "Sentential": [
+                        {
+                          "name": "Sentential",
+                          "children": {
+                            "Nonterminal": [
+                              {
+                                "image": "Term",
+                                "startOffset": 127,
+                                "endOffset": 130,
+                                "startLine": 7,
+                                "endLine": 7,
+                                "startColumn": 15,
+                                "endColumn": 18,
+                                "tokenTypeIdx": 5,
+                                "tokenType": {
+                                  "name": "Nonterminal",
+                                  "PATTERN": {},
+                                  "tokenTypeIdx": 5,
+                                  "CATEGORIES": [],
+                                  "categoryMatches": [],
+                                  "categoryMatchesMap": {},
+                                  "isParent": false
+                                }
+                              },
+                              {
+                                "image": "RestExpression",
+                                "startOffset": 132,
+                                "endOffset": 145,
+                                "startLine": 7,
+                                "endLine": 7,
+                                "startColumn": 20,
+                                "endColumn": 33,
+                                "tokenTypeIdx": 5,
+                                "tokenType": {
+                                  "name": "Nonterminal",
+                                  "PATTERN": {},
+                                  "tokenTypeIdx": 5,
+                                  "CATEGORIES": [],
+                                  "categoryMatches": [],
+                                  "categoryMatchesMap": {},
+                                  "isParent": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "OptionalCommentThenNewlines": [
+                  {
+                    "name": "OptionalCommentThenNewlines",
+                    "children": {
+                      "Newline": [
+                        {
+                          "image": "\n",
+                          "startOffset": 146,
+                          "endOffset": 146,
+                          "startLine": 7,
+                          "endLine": 7,
+                          "startColumn": 34,
+                          "endColumn": 34,
+                          "tokenTypeIdx": 4,
+                          "tokenType": {
+                            "name": "Newline",
+                            "PATTERN": {},
+                            "tokenTypeIdx": 4,
+                            "CATEGORIES": [],
+                            "categoryMatches": [],
+                            "categoryMatchesMap": {},
+                            "isParent": false
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "SyntaxRule",
+              "children": {
+                "Nonterminal": [
+                  {
+                    "image": "RestExpression",
+                    "startOffset": 147,
+                    "endOffset": 160,
+                    "startLine": 8,
+                    "endLine": 8,
+                    "startColumn": 1,
+                    "endColumn": 14,
+                    "tokenTypeIdx": 5,
+                    "tokenType": {
+                      "name": "Nonterminal",
+                      "PATTERN": {},
+                      "tokenTypeIdx": 5,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "ProductionOperator": [
+                  {
+                    "image": "->",
+                    "startOffset": 162,
+                    "endOffset": 163,
+                    "startLine": 8,
+                    "endLine": 8,
+                    "startColumn": 16,
+                    "endColumn": 17,
+                    "tokenTypeIdx": 9,
+                    "tokenType": {
+                      "name": "ProductionOperator",
+                      "PATTERN": "->",
+                      "tokenTypeIdx": 9,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "Choices": [
+                  {
+                    "name": "Choices",
+                    "children": {
+                      "Sentential": [
+                        {
+                          "name": "Sentential",
+                          "children": {
+                            "Terminal": [
+                              {
+                                "image": "eps",
+                                "startOffset": 165,
+                                "endOffset": 167,
+                                "startLine": 8,
+                                "endLine": 8,
+                                "startColumn": 19,
+                                "endColumn": 21,
+                                "tokenTypeIdx": 6,
+                                "tokenType": {
+                                  "name": "Terminal",
+                                  "PATTERN": {},
+                                  "tokenTypeIdx": 6,
+                                  "CATEGORIES": [],
+                                  "categoryMatches": [],
+                                  "categoryMatchesMap": {},
+                                  "isParent": false
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "name": "Sentential",
+                          "children": {
+                            "Terminal": [
+                              {
+                                "image": "additiveOp",
+                                "startOffset": 171,
+                                "endOffset": 180,
+                                "startLine": 8,
+                                "endLine": 8,
+                                "startColumn": 25,
+                                "endColumn": 34,
+                                "tokenTypeIdx": 6,
+                                "tokenType": {
+                                  "name": "Terminal",
+                                  "PATTERN": {},
+                                  "tokenTypeIdx": 6,
+                                  "CATEGORIES": [],
+                                  "categoryMatches": [],
+                                  "categoryMatchesMap": {},
+                                  "isParent": false
+                                }
+                              }
+                            ],
+                            "Nonterminal": [
+                              {
+                                "image": "Expression",
+                                "startOffset": 182,
+                                "endOffset": 191,
+                                "startLine": 8,
+                                "endLine": 8,
+                                "startColumn": 36,
+                                "endColumn": 45,
+                                "tokenTypeIdx": 5,
+                                "tokenType": {
+                                  "name": "Nonterminal",
+                                  "PATTERN": {},
+                                  "tokenTypeIdx": 5,
+                                  "CATEGORIES": [],
+                                  "categoryMatches": [],
+                                  "categoryMatchesMap": {},
+                                  "isParent": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "ChoiceOperator": [
+                        {
+                          "image": "|",
+                          "startOffset": 169,
+                          "endOffset": 169,
+                          "startLine": 8,
+                          "endLine": 8,
+                          "startColumn": 23,
+                          "endColumn": 23,
+                          "tokenTypeIdx": 10,
+                          "tokenType": {
+                            "name": "ChoiceOperator",
+                            "PATTERN": "|",
+                            "tokenTypeIdx": 10,
+                            "CATEGORIES": [],
+                            "categoryMatches": [],
+                            "categoryMatchesMap": {},
+                            "isParent": false
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "OptionalCommentThenNewlines": [
+                  {
+                    "name": "OptionalCommentThenNewlines",
+                    "children": {
+                      "Newline": [
+                        {
+                          "image": "\n",
+                          "startOffset": 192,
+                          "endOffset": 192,
+                          "startLine": 8,
+                          "endLine": 8,
+                          "startColumn": 46,
+                          "endColumn": 46,
+                          "tokenTypeIdx": 4,
+                          "tokenType": {
+                            "name": "Newline",
+                            "PATTERN": {},
+                            "tokenTypeIdx": 4,
+                            "CATEGORIES": [],
+                            "categoryMatches": [],
+                            "categoryMatchesMap": {},
+                            "isParent": false
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "SyntaxRule",
+              "children": {
+                "Nonterminal": [
+                  {
+                    "image": "Term",
+                    "startOffset": 193,
+                    "endOffset": 196,
+                    "startLine": 9,
+                    "endLine": 9,
+                    "startColumn": 1,
+                    "endColumn": 4,
+                    "tokenTypeIdx": 5,
+                    "tokenType": {
+                      "name": "Nonterminal",
+                      "PATTERN": {},
+                      "tokenTypeIdx": 5,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "ProductionOperator": [
+                  {
+                    "image": "->",
+                    "startOffset": 198,
+                    "endOffset": 199,
+                    "startLine": 9,
+                    "endLine": 9,
+                    "startColumn": 6,
+                    "endColumn": 7,
+                    "tokenTypeIdx": 9,
+                    "tokenType": {
+                      "name": "ProductionOperator",
+                      "PATTERN": "->",
+                      "tokenTypeIdx": 9,
+                      "CATEGORIES": [],
+                      "categoryMatches": [],
+                      "categoryMatchesMap": {},
+                      "isParent": false
+                    }
+                  }
+                ],
+                "Choices": [
+                  {
+                    "name": "Choices",
+                    "children": {
+                      "Sentential": [
+                        {
+                          "name": "Sentential",
+                          "children": {
+                            "Terminal": [
+                              {
+                                "image": "integer",
+                                "startOffset": 201,
+                                "endOffset": 207,
+                                "startLine": 9,
+                                "endLine": 9,
+                                "startColumn": 9,
+                                "endColumn": 15,
+                                "tokenTypeIdx": 6,
+                                "tokenType": {
+                                  "name": "Terminal",
+                                  "PATTERN": {},
+                                  "tokenTypeIdx": 6,
+                                  "CATEGORIES": [],
+                                  "categoryMatches": [],
+                                  "categoryMatchesMap": {},
+                                  "isParent": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "OptionalCommentThenNewlines": [
+                  {
+                    "name": "OptionalCommentThenNewlines",
+                    "children": {
+                      "Newline": [
+                        {
+                          "image": "\n",
+                          "startOffset": 208,
+                          "endOffset": 208,
+                          "startLine": 9,
+                          "endLine": 9,
+                          "startColumn": 16,
+                          "endColumn": 16,
+                          "tokenTypeIdx": 4,
+                          "tokenType": {
+                            "name": "Newline",
+                            "PATTERN": {},
+                            "tokenTypeIdx": 4,
+                            "CATEGORIES": [],
+                            "categoryMatches": [],
+                            "categoryMatchesMap": {},
+                            "isParent": false
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
